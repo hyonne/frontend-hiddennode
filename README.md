@@ -49,8 +49,6 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 
 [🔗 Figma 프로토타입 보기](https://www.figma.com/design/nUWkq3RUz0uDMKt7DdBsbx/%EB%8F%85%EB%A6%BD%ED%8C%90%EA%B2%B0%EB%AC%B8?node-id=168-412&p=f&t=YUW3n9AmeuGdd019-0)
 
-> Figma 링크는 본인의 링크로 교체해주세요!
-
 ---
 
 ## 🚀 배포 및 실행 방법

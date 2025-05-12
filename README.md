@@ -51,7 +51,7 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 
 ---
 ## frontend 진행상황 주소
-[📦 GitHub 저장소 바로가기](https://github.com/your-username/hidden-node)
+[📦 GitHub 저장소 바로가기](https://github.com/dau-J/hidden_node_test.git)
 
 ## 🚀 배포 및 실행 방법
 

@@ -60,6 +60,6 @@ npm install
 npm run dev
 
 requirements
--------------------------
+---------------------------------------------------
 npm install next react react-dom --legacy-peer-deps
 

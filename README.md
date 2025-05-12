@@ -54,9 +54,12 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 ## 🚀 배포 및 실행 방법
 
 ```bash
-git clone https://github.com/your-username/hidden-node.git
+git clone https://github.com/Donga-SW/frontend.git
 cd hidden-node
 npm install
 npm run dev
 
+requirements
+-------------------------
+npm install next react react-dom --legacy-peer-deps
 

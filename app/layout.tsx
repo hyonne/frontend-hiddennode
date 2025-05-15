@@ -7,9 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "HiddenNode",
-  description: "창의적인 아이디어와 기술의 만남",
-    generator: 'v0.dev'
+  title: "독립유공 아카이브",
+  description: "지식그래프를 이용한 독립유공자 판결문",
+    generator: '정현성성'
 }
 
 export default function RootLayout({

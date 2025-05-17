@@ -55,17 +55,17 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li>
                   <Link href="#" className="text-xs text-gray-400 hover:text-white">
-                    기능 1
+                    메인화면
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="text-xs text-gray-400 hover:text-white">
-                    기능 2
+                    지식 그래프
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="text-xs text-gray-400 hover:text-white">
-                    기능 3
+                    자료실
                   </Link>
                 </li>
               </ul>

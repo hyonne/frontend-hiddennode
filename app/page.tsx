@@ -26,8 +26,7 @@ export default function Home() {
     {
       id: 1,
       title: "판결문 수집 및 엔티티 추출",
-      description: `판결문에서 인물, 사건, 장소와 같은
-정보를 추출합니다.`,
+      description: `판결문에서 인물, 사건, 장소와 같은 정보를 추출합니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -55,9 +54,7 @@ export default function Home() {
     {
       id: 3,
       title: "지식그래프 시각화 탐색",
-      description: `시각화된 그래프에서 공적으로
- 알려지지 않은 독립운동의 흐름을 
-직접 탐색할 수 있습니다.`,
+      description: `시각화된 그래프에서 공적으로 알려지지 않은 독립운동의 흐름을 직접 탐색할 수 있습니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path

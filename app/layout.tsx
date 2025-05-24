@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "독립유공 아카이브",
   description: "지식그래프를 이용한 독립유공자 판결문",
-    generator: '정현성성'
+    generator: '정현성'
 }
 
 export default function RootLayout({

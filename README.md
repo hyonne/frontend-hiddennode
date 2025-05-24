@@ -79,3 +79,5 @@ npm run dev
 # requirements
 -----------------------------------------------------------------------
 npm install next react react-dom --legacy-peer-deps
+npm install sigma graphology --legacy-peer-deps
+npm install graphology -serialization --legacy-peer-deps

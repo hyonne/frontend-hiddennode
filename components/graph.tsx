@@ -1,0 +1,353 @@
+'use client'
+
+import { useEffect, useRef, useState, useCallback } from "react";
+
+export default function GraphComponent() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const datalistRef = useRef<HTMLDataListElement>(null);
+  const setSearchQueryRef = useRef<(q: string) => void>(() => {});
+  const [graphData, setGraphData] = useState<any>(null);
+  const [state, setState] = useState<{
+    hoveredNode?: string;
+    hoveredNeighbors?: Set<string>;
+    selectedNode?: string;
+    selectedNeighbors?: Set<string>;
+    searchQuery: string;
+    suggestions?: Set<string>;
+  }>({ searchQuery: "" });
+  // 최신 state를 항상 참조할 수 있도록 useRef 사용
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
+  // 데이터 fetch
+  useEffect(() => {
+    fetch("/data/data.json")
+      .then((res) => res.json())
+      .then((json) => setGraphData(json));
+  }, []);
+
+  // sigma/graphology 및 예제 로직 적용
+  useEffect(() => {
+    if (!graphData || !containerRef.current) return;
+    let renderer: any;
+    let graph: any;
+    Promise.all([import("graphology"), import("sigma")]).then(([{ default: Graph }, { default: Sigma }]) => {
+      // x, y 좌표 보정 및 type 속성 제거(또는 강제 'circle')
+      const nodesWithXY = graphData.nodes.map((node: any, idx: number) => {
+        let x =
+          typeof node.attributes?.x === "number"
+            ? node.attributes.x
+            : typeof node.x === "number"
+            ? node.x
+            : Math.cos(idx) * 10;
+        let y =
+          typeof node.attributes?.y === "number"
+            ? node.attributes.y
+            : typeof node.y === "number"
+            ? node.y
+            : Math.sin(idx) * 10;
+        if (typeof x !== "number" || isNaN(x)) x = 0;
+        if (typeof y !== "number" || isNaN(y)) y = 0;
+        const { type, label, size, ...restAttrs } = node.attributes ?? node;
+        return {
+          ...node,
+          attributes: {
+            ...restAttrs,
+            x,
+            y,
+            type: "circle",
+            label: label ?? node.label ?? node.id ?? node.key ?? String(idx),
+            size: typeof size === "number" && size > 0 ? size : 10,
+          },
+        };
+      });
+      graph = new Graph();
+      nodesWithXY.forEach((node: any) => {
+        graph.addNode(node.key ?? node.id, node.attributes ?? node);
+      });
+      const nodeIds = new Set(nodesWithXY.map((node: any) => node.key ?? node.id));
+      if (graphData.edges) {
+        graphData.edges.forEach((edge: any) => {
+          const source = edge.source;
+          const target = edge.target;
+          if (nodeIds.has(source) && nodeIds.has(target)) {
+            graph.addEdge(source, target, edge.attributes ?? edge);
+          }
+        });
+      }
+      renderer = new Sigma(graph, containerRef.current!, {
+        enableEdgeEvents: true,
+        renderLabels: true,
+        labelRenderedSizeThreshold: 0,
+        defaultNodeType: "circle",
+      });
+      renderer.refresh();
+      renderer.refresh();
+      // 캔버스에 pointer-events 강제 적용
+      const canvases = containerRef.current?.querySelectorAll("canvas");
+      canvases?.forEach((c: any) => {
+        c.style.pointerEvents = "auto";
+      });
+      if (datalistRef.current) {
+        datalistRef.current.innerHTML = graph
+          .nodes()
+          .map((node: string) => `<option value="${graph.getNodeAttribute(node, "label") ?? node}"></option>`)
+          .join("\n");
+      }
+      // 최신 stateRef를 참조하는 reducer/이벤트
+      function setHoveredNode(node?: string) {
+        if (node) {
+          setState((prev) => {
+            const next = { ...prev, hoveredNode: node, hoveredNeighbors: new Set<string>(graph.neighbors(node)) };
+            stateRef.current = next;
+            return next;
+          });
+        } else {
+          setState((prev) => {
+            const next = { ...prev, hoveredNode: undefined, hoveredNeighbors: undefined };
+            stateRef.current = next;
+            return next;
+          });
+        }
+        renderer.refresh({ skipIndexation: true });
+      }
+      function setSelectedNode(node?: string) {
+        if (node) {
+          setState((prev) => {
+            const next = { ...prev, selectedNode: node, selectedNeighbors: new Set<string>(graph.neighbors(node)) };
+            stateRef.current = next;
+            return next;
+          });
+        } else {
+          setState((prev) => {
+            const next = { ...prev, selectedNode: undefined, selectedNeighbors: undefined };
+            stateRef.current = next;
+            return next;
+          });
+        }
+        renderer.refresh({ skipIndexation: true });
+      }
+      // 이벤트 바인딩
+      if (inputRef.current) {
+        inputRef.current.oninput = () => setSearchQuery(inputRef.current!.value || "");
+        inputRef.current.onblur = () => setSearchQuery("");
+      }
+      renderer.on("enterNode", ({ node }: any) => {
+        console.log("enterNode", node);
+        setHoveredNode(node);
+      });
+      renderer.on("leaveNode", () => {
+        console.log("leaveNode");
+        setHoveredNode(undefined);
+      });
+      // 검색창에서 해당 노드를 검색하면 그 노드와 이웃만 남기고 블러 처리
+      renderer.setSetting("nodeReducer", (node: string, data: any) => {
+        const s = stateRef.current;
+        const res: any = { ...data };
+        // 검색창에서 노드가 선택된 경우(selectedNode), 해당 노드와 이웃만 정상 표시, 나머지는 블러
+        if (s.selectedNode && s.selectedNode.length > 0 && s.hoveredNeighbors) {
+          if (node !== s.selectedNode && !s.hoveredNeighbors.has(node)) {
+            res.label = "";
+            res.color = "#f6f6f6";
+          }
+        } else if (s.suggestions && !s.suggestions.has(node)) {
+          // 검색창 입력 중에는 suggestions에 없는 노드만 블러
+          res.label = "";
+          res.color = "#f6f6f6";
+        }
+        if (s.selectedNode === node) {
+          res.highlighted = true;
+        } else if (s.suggestions && s.suggestions.has(node)) {
+          res.forceLabel = true;
+        }
+        return res;
+      });
+      renderer.setSetting("edgeReducer", (edge: string, data: any) => {
+        const s = stateRef.current;
+        const res: any = { ...data };
+        // 검색창에서 노드가 선택된 경우(selectedNode), 해당 노드와 연결된 엣지만 표시, 나머지는 숨김
+        if (s.selectedNode && s.selectedNode.length > 0 && s.hoveredNeighbors) {
+          const [source, target] = [graph.source(edge), graph.target(edge)];
+          if (
+            source !== s.selectedNode &&
+            target !== s.selectedNode &&
+            !s.hoveredNeighbors.has(source) &&
+            !s.hoveredNeighbors.has(target)
+          ) {
+            res.hidden = true;
+          }
+        } else if (
+          s.suggestions &&
+          (!s.suggestions.has(graph.source(edge)) || !s.suggestions.has(graph.target(edge)))
+        ) {
+          res.hidden = true;
+        }
+        return res;
+      });
+
+      // setSearchQuery를 외부에서 안전하게 참조할 수 있도록 useRef에 미리 할당
+      function setSearchQuery(query: string) {
+        setState((prev) => {
+          const next = { ...prev, searchQuery: query };
+          stateRef.current = next;
+          return next;
+        });
+        if (inputRef.current && inputRef.current.value !== query) inputRef.current.value = query;
+        if (query) {
+          const lcQuery = query.toLowerCase();
+          const suggestionsArr = graph
+            .nodes()
+            .map((n: string) => {
+              const label = graph.getNodeAttribute(n, "label");
+              return { id: n as string, label: typeof label === "string" ? label : "" };
+            })
+            .filter(({ label }: { label: string }) => label.toLowerCase().includes(lcQuery));
+          if (suggestionsArr.length === 1 && suggestionsArr[0].label === query) {
+            setSelectedNode(suggestionsArr[0].id);
+            // 카메라 이동 (검색에서만)
+            const nodePosition = renderer.getNodeDisplayData(suggestionsArr[0].id);
+            if (nodePosition) renderer.getCamera().animate(nodePosition, { duration: 500 });
+          } else {
+            setSelectedNode(undefined);
+            setState((prev) => {
+              const next = {
+                ...prev,
+                suggestions: new Set<string>(suggestionsArr.map(({ id }: { id: string }) => id)),
+              };
+              stateRef.current = next;
+              return next;
+            });
+          }
+        } else {
+          setSelectedNode(undefined);
+          setState((prev) => {
+            const next = { ...prev, suggestions: undefined };
+            stateRef.current = next;
+            return next;
+          });
+        }
+        renderer.refresh({ skipIndexation: true });
+      }
+      setSearchQueryRef.current = setSearchQuery; // useEffect 내부에서는 할당만
+
+      // 기존 setSearchQuery를 덮어씀
+      // 이벤트 바인딩도 새 setSearchQuery로 연결
+      if (inputRef.current) {
+        inputRef.current.oninput = () => setSearchQuery(inputRef.current!.value || "");
+        inputRef.current.onblur = () => setSearchQuery("");
+      }
+      renderer.on("enterNode", ({ node }: any) => setHoveredNode(node));
+      renderer.on("leaveNode", () => setHoveredNode(undefined));
+      renderer.setSetting("nodeReducer", (node: string, data: any) => {
+        const s = stateRef.current;
+        const res: any = { ...data };
+        // 1. hoveredNode가 있으면 hover만 적용 (selectedNode 무시)
+        if (s.hoveredNode && s.hoveredNeighbors) {
+          if (node !== s.hoveredNode && !s.hoveredNeighbors.has(node)) {
+            res.label = "";
+            res.color = "#f6f6f6";
+          }
+          return res;
+        }
+        // 2. hoveredNode가 없을 때만 selectedNode 적용
+        if (s.selectedNode && s.selectedNeighbors) {
+          if (node !== s.selectedNode && !s.selectedNeighbors.has(node)) {
+            res.label = "";
+            res.color = "#f6f6f6";
+          }
+          if (s.selectedNode === node) res.highlighted = true;
+          return res;
+        }
+        // 3. 검색창 입력 중 suggestions
+        if (s.suggestions && !s.suggestions.has(node)) {
+          res.label = "";
+          res.color = "#f6f6f6";
+        }
+        if (s.suggestions && s.suggestions.has(node)) {
+          res.forceLabel = true;
+        }
+        return res;
+      });
+      renderer.setSetting("edgeReducer", (edge: string, data: any) => {
+        const s = stateRef.current;
+        const res: any = { ...data };
+        // 1. hoveredNode가 있으면 hover만 적용 (selectedNode 무시)
+        if (s.hoveredNode && s.hoveredNeighbors) {
+          const [source, target] = [graph.source(edge), graph.target(edge)];
+          if (
+            source !== s.hoveredNode &&
+            target !== s.hoveredNode &&
+            !s.hoveredNeighbors.has(source) &&
+            !s.hoveredNeighbors.has(target)
+          ) {
+            res.hidden = true;
+          }
+          return res;
+        }
+        // 2. hoveredNode가 없을 때만 selectedNode 적용
+        if (s.selectedNode && s.selectedNeighbors) {
+          const [source, target] = [graph.source(edge), graph.target(edge)];
+          if (
+            source !== s.selectedNode &&
+            target !== s.selectedNode &&
+            !s.selectedNeighbors.has(source) &&
+            !s.selectedNeighbors.has(target)
+          ) {
+            res.hidden = true;
+          }
+          return res;
+        }
+        // 3. 검색창 입력 중 suggestions
+        if (
+          s.suggestions &&
+          (!s.suggestions.has(graph.source(edge)) || !s.suggestions.has(graph.target(edge)))
+        ) {
+          res.hidden = true;
+        }
+        return res;
+      });
+      // cleanup
+      return () => {
+        renderer.kill();
+      };
+    });
+    return () => {
+      if (renderer) renderer.kill();
+    };
+  }, [graphData]);
+
+  return (
+    <div className="flex flex-col w-full h-full min-h-screen bg-gray-800">
+      <div className="flex items-center gap-2 p-4 justify-end">
+        <div className="relative w-64">
+          <input
+            ref={inputRef}
+            id="search-input"
+            className="border rounded px-3 py-2 w-full pr-8"
+            placeholder="노드 이름 검색"
+            list="suggestions"
+            value={state.searchQuery}
+            onChange={e => setSearchQueryRef.current(e.target.value)}
+          />
+          {state.searchQuery && (
+            <button
+              type="button"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
+              aria-label="검색어 지우기"
+              onClick={() => setSearchQueryRef.current("")}
+            >
+              X
+            </button>
+          )}
+          <datalist id="suggestions" ref={datalistRef} />
+        </div>
+      </div>
+      <div className="flex-1 w-full h-[calc(100vh-5rem)] min-h-[500px]">
+        <div className="relative w-full h-full min-h-[500px]">
+          <div ref={containerRef} className="absolute inset-0 z-0 w-full h-full min-h-[500px] pointer-events-auto" />
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ChevronRight, X, Clock, ChevronDown, Bookmark } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import GraphComponent from "@/components/graph"
 
 export default function KnowledgeGraph() {
   const [activeTab, setActiveTab] = useState<string>("설명사이드바")
@@ -56,34 +57,10 @@ export default function KnowledgeGraph() {
 
             {/* 메인 이미지 */}
             <div className="w-full h-full">
-              <Image
-                src="./images/main01.png"
-                alt="graph placeholder"
-                width={800}
-                height={800}
-                className="w-full h-full object-cover"
-              />
+              <GraphComponent />
             </div>
 
-            {/* ✅ 우측 하단 확대/축소 버튼 */}
-            <div className="absolute bottom-4 right-4 flex flex-col space-y-2 z-20">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md w-10 h-10 flex items-center justify-center"
-                aria-label="확대"
-              >
-                +
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md w-10 h-10 flex items-center justify-center"
-                aria-label="축소"
-              >
-                –
-              </Button>
-            </div>
+            
           </div>
 
           {/* 사이드바 */}
@@ -172,4 +149,3 @@ export default function KnowledgeGraph() {
     </div>
   )
 }
-

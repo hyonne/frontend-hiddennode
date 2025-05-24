@@ -39,9 +39,7 @@ export default function Home() {
     {
       id: 2,
       title: "STI 기반 의미 연결",
-      description: `STI(Semantic Table Interpretation)
-방식으로 요소 간 의미 있는 관계를 
-연결하고 지식그래프를 구성합니다.`,
+      description: `STI(Semantic Table Interpretation) 방식으로 요소 간 의미 있는 관계를 연결하고 지식그래프를 구성합니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -120,18 +118,17 @@ export default function Home() {
         {/* 상단 배경 이미지 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-0">
           <Image
-            src="/images/main03_1.png"
+            src="/images/main02.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#775977]/70" />
         </div>
 
         {/* 상단 제목 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-10 flex items-center px-8">
-          <span className="w-2 h-2 bg-white rounded-full mr-3" />
-          <div className="h-px bg-white w-16 mr-4" />
+          <span className="w-2 h-2 bg-black rounded-full mr-3" />
+          <div className="h-px bg-black w-16 mr-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white tracking-[0.35em]">
             <span className="bg-black/70 px-3 py-1">
               독립운동 판결문, 왜 중요할까요?
@@ -140,7 +137,7 @@ export default function Home() {
         </div>
 
         {/* 하단 배경 */}
-        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-white z-0" />
+        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black z-0" />
 
         <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
           {/* 이미지 영역 */}
@@ -155,7 +152,7 @@ export default function Home() {
           </div>
 
           {/* 텍스트 영역 */}
-          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] text-gray-900">
+          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] text-wihte">
             <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
               교과서에 나오지 않는 기록이 있습니다.
               <br />
@@ -166,7 +163,7 @@ export default function Home() {
               <br />
               <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
             </p>
-            <button className="text-gray-500 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
+            <button className="text-gray-300 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
               탐색해보기 <span className="ml-1">&gt;</span>
             </button>
           </div>
@@ -177,24 +174,23 @@ export default function Home() {
       <section className="snap-start relative h-[calc(100vh-5rem)] bg-black overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-[30%] z-0">
           <Image
-            src="/images/main03_3.png"
+            src="/images/main03_bg.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#4f7581]/70" />
         </div>
         <div className="absolute top-0 inset-x-0 h-[30%] z-10 flex items-center justify-between px-8">
           <div className="flex items-center">
-            <span className="w-2 h-2 bg-white rounded-full mr-3" />
-            <div className="h-px bg-white w-16 mr-4" />
+            <span className="w-2 h-2 bg-black rounded-full mr-3" />
+            <div className="h-px bg-black w-16 mr-4" />
             <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
               <span className="bg-black/70 px-3 py-1">
                 사라진 영웅의 이름을 기억하는 방법.
               </span>
             </h2>
           </div>
-          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right">
+          <p className="text-sm md:text-base text-black tracking-[0.15em] text-right">
             숨겨진 독립운동을 되짚기 위해
             <br />
             우리는 세 가지에 집중합니다.
@@ -312,7 +308,6 @@ export default function Home() {
 
       {/* 섹션 06 - 팀 소개 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -328,8 +323,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             HiddenNode 팀을 소개합니다.
@@ -342,7 +335,6 @@ export default function Home() {
 
       {/* 섹션 06-02 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -357,8 +349,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             이름 없는 기억을 잇는다는 것.
@@ -371,7 +361,6 @@ export default function Home() {
 
       {/* 섹션 06-03 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -386,7 +375,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             이름 없는 기억을 잇는다는 것

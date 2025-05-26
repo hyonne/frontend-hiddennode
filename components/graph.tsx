@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-export default function GraphComponent() {
+interface GraphComponentProps {
+  onSelectNode?: (nodeKey: string | undefined) => void;
+  selectedFile: string;
+}
+
+export default function GraphComponent({ onSelectNode, selectedFile }: GraphComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const datalistRef = useRef<HTMLDataListElement>(null);
@@ -22,10 +27,10 @@ export default function GraphComponent() {
 
   // 데이터 fetch
   useEffect(() => {
-    fetch("/data/data.json")
+    fetch(`/data/${selectedFile}`)
       .then((res) => res.json())
       .then((json) => setGraphData(json));
-  }, []);
+  }, [selectedFile]);
 
   // sigma/graphology 및 예제 로직 적용
   useEffect(() => {
@@ -34,34 +39,40 @@ export default function GraphComponent() {
     let graph: any;
     Promise.all([import("graphology"), import("sigma")]).then(([{ default: Graph }, { default: Sigma }]) => {
       // x, y 좌표 보정 및 type 속성 제거(또는 강제 'circle')
-      const nodesWithXY = graphData.nodes.map((node: any, idx: number) => {
-        let x =
-          typeof node.attributes?.x === "number"
-            ? node.attributes.x
-            : typeof node.x === "number"
-            ? node.x
-            : Math.cos(idx) * 10;
-        let y =
-          typeof node.attributes?.y === "number"
-            ? node.attributes.y
-            : typeof node.y === "number"
-            ? node.y
-            : Math.sin(idx) * 10;
-        if (typeof x !== "number" || isNaN(x)) x = 0;
-        if (typeof y !== "number" || isNaN(y)) y = 0;
-        const { type, label, size, ...restAttrs } = node.attributes ?? node;
-        return {
-          ...node,
-          attributes: {
-            ...restAttrs,
-            x,
-            y,
-            type: "circle",
-            label: label ?? node.label ?? node.id ?? node.key ?? String(idx),
-            size: typeof size === "number" && size > 0 ? size : 10,
-          },
-        };
-      });
+      // e로 시작하는 key(사건개요)는 노드화에서 제외
+      const nodesWithXY = graphData.nodes
+        .filter((node: any) => {
+          const key = node.key ?? node.id;
+          return typeof key === "string" ? !key.startsWith("e") : true;
+        })
+        .map((node: any, idx: number) => {
+          let x =
+            typeof node.attributes?.x === "number"
+              ? node.attributes.x
+              : typeof node.x === "number"
+              ? node.x
+              : Math.cos(idx) * 10;
+          let y =
+            typeof node.attributes?.y === "number"
+              ? node.attributes.y
+              : typeof node.y === "number"
+              ? node.y
+              : Math.sin(idx) * 10;
+          if (typeof x !== "number" || isNaN(x)) x = 0;
+          if (typeof y !== "number" || isNaN(y)) y = 0;
+          const { type, label, size, ...restAttrs } = node.attributes ?? node;
+          return {
+            ...node,
+            attributes: {
+              ...restAttrs,
+              x,
+              y,
+              type: "circle",
+              label: label ?? node.label ?? node.id ?? node.key ?? String(idx),
+              size: typeof size === "number" && size > 0 ? size : 10,
+            },
+          };
+        });
       graph = new Graph();
       nodesWithXY.forEach((node: any) => {
         graph.addNode(node.key ?? node.id, node.attributes ?? node);
@@ -113,6 +124,7 @@ export default function GraphComponent() {
         renderer.refresh({ skipIndexation: true });
       }
       function setSelectedNode(node?: string) {
+        if (onSelectNode) onSelectNode(node);
         if (node) {
           setState((prev) => {
             const next = { ...prev, selectedNode: node, selectedNeighbors: new Set<string>(graph.neighbors(node)) };

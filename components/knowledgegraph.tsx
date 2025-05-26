@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ChevronRight, X, Clock, ChevronDown, Bookmark } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -9,9 +9,151 @@ import GraphComponent from "@/components/graph"
 export default function KnowledgeGraph() {
   const [activeTab, setActiveTab] = useState<string>("설명사이드바")
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [selectedNode, setSelectedNode] = useState<string | undefined>(undefined)
+  const [graphData, setGraphData] = useState<any>(null)
+
+  // 데이터셋 버튼 핸들러 (각 버튼마다 파일명 코드에서 지정)
+  const [activeDataset, setActiveDataset] = useState('test1.json');
+  const datasetFiles = [
+    { name: '버튼 1', file: 'test1.json' }, // 여기에 원하는 파일명 입력
+    { name: '버튼 2', file: 'data.json' }, // 여기에 원하는 파일명 입력
+    { name: '버튼 3', file: 'data.json' },
+    { name: '버튼 3', file: 'data.json' } // 여기에 원하는 파일명 입력
+  ];
+
+  useEffect(() => {
+    fetch(`/data/${activeDataset}`)
+      .then((res) => res.json())
+      .then((json) => setGraphData(json));
+  }, [activeDataset]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
+  }
+
+  // 노드 및 이웃 정보 추출
+  let nodeInfo: any = null
+  let neighborInfos: any[] = []
+  if (graphData && selectedNode) {
+    const nodeMap = new Map(
+      graphData.nodes.map((n: any) => [n.key, n.attributes])
+    )
+    nodeInfo = nodeMap.get(selectedNode)
+    // 이웃 찾기 (양방향)
+    const neighbors = new Set<string>()
+    if (graphData.edges) {
+      graphData.edges.forEach((e: any) => {
+        if (e.source === selectedNode) neighbors.add(e.target)
+        if (e.target === selectedNode) neighbors.add(e.source)
+      })
+    }
+    neighborInfos = Array.from(neighbors)
+      .map((k) => nodeMap.get(k))
+      .filter(Boolean)
+  }
+
+  // 주요 label 매핑
+  const LABEL_MAP: Record<string, string> = {
+    '주소': '주소',
+    '연도': '년도',
+    '이름': '이름',
+    '죄명': '죄명',
+    '사건': '사건개요',
+    '사건개요': '사건개요',
+    'label': '이름',
+    'type': '유형',
+    '나이': '나이',
+    '주문': '주문',
+    '본주거지': '주소',
+    '판결시점': '판결시점',
+  };
+
+  function extractMainInfo(attr: any) {
+    if (!attr) return [];
+    const result: { label: string; value: string }[] = [];
+    // 주소
+    if (attr.type === '주소' || attr['본주거지']) {
+      result.push({ label: '주소', value: attr['label'] || attr['본주거지'] || '' });
+    }
+    // 년도
+    if (attr.type === '연도' || /^year_/.test(attr['label'])) {
+      result.push({ label: '년도', value: attr['label'] });
+    }
+    // 이름(인물)
+    if (attr.type === '인물' || attr['label']) {
+      result.push({ label: '이름', value: attr['label'] });
+    }
+    // 죄명
+    if (attr.type === '죄명' || attr['type'] === '죄명' || attr['label']?.includes('죄')) {
+      result.push({ label: '죄명', value: attr['label'] });
+    }
+    // 사건개요(사건)
+    if (attr.type === '사건' || attr['사건개요'] || (attr['label'] && attr['label'].length > 30)) {
+      result.push({ label: '사건개요', value: attr['label'] });
+    }
+    // 기타 주요 속성
+    ['나이', '주문', '판결시점'].forEach((k) => {
+      if (attr[k]) result.push({ label: LABEL_MAP[k] || k, value: attr[k] });
+    });
+    // 중복 제거
+    const seen = new Set();
+    return result.filter(({ label, value }) => {
+      const key = label + value;
+      if (seen.has(key) || !value) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function renderMainInfo(mainInfo: any[]) {
+    if (!mainInfo || mainInfo.length === 0) {
+      return <div className="text-gray-400">주요 정보 없음</div>;
+    }
+    return mainInfo.map((item, i) => (
+      <div key={i} className="flex justify-between text-black">
+        <span className="font-medium text-black">{item.label}</span>
+        <span className="ml-2 text-black">{item.value}</span>
+      </div>
+    ));
+  }
+  function renderNeighborInfo(neighborInfos: any[]) {
+    if (!neighborInfos || neighborInfos.length === 0) return null;
+    return (
+      <div className="p-4 border-b">
+        <h2 className="text-lg text-black font-bold mb-2">관계 노드정보</h2>
+        {neighborInfos.map((info, idx) => {
+          const mainInfo = extractMainInfo(info);
+          if (mainInfo.length === 0) {
+            return (
+              <div key={idx} className="mb-2 p-2 bg-gray-100 rounded">
+                <div className="text-gray-400 text-xs">주요 정보 없음</div>
+              </div>
+            );
+          }
+          return (
+            <div key={idx} className="mb-2 p-2 bg-gray-100 rounded">
+              {mainInfo.map((item, i) => (
+                <div key={i} className="flex justify-between text-xs text-black">
+                  <span className="font-medium text-black">{item.label}</span>
+                  <span className="ml-2 text-black">{item.value}</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // 노드 정보 렌더링
+  let nodeInfoBlock = null;
+  if (nodeInfo) {
+    const mainInfo = extractMainInfo(nodeInfo);
+    nodeInfoBlock = (
+      <div className="mt-2 mb-4 text-sm space-y-1">
+        {renderMainInfo(mainInfo)}
+      </div>
+    );
   }
 
   return (
@@ -25,42 +167,23 @@ export default function KnowledgeGraph() {
                 sidebarOpen ? "left-[370px]" : "left-4"
               }`}
             >
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md"
-              >
-                버튼 1
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md"
-              >
-                버튼 2
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md"
-              >
-                버튼 3
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="bg-white text-black shadow-md"
-              >
-                버튼 4
-              </Button>
+              {datasetFiles.map((btn, idx) => (
+                <Button
+                  key={btn.name + idx}
+                  variant={activeDataset === btn.file ? "default" : "secondary"}
+                  size="sm"
+                  className={`bg-white text-black shadow-md border ${activeDataset === btn.file ? 'border-blue-500 font-bold' : 'border-gray-200'}`}
+                  onClick={() => setActiveDataset(btn.file)}
+                >
+                  {btn.name}
+                </Button>
+              ))}
             </div>
 
             {/* 메인 이미지 */}
             <div className="w-full h-full">
-              <GraphComponent />
+              <GraphComponent onSelectNode={setSelectedNode} selectedFile={activeDataset} />
             </div>
-
-            
           </div>
 
           {/* 사이드바 */}
@@ -70,19 +193,10 @@ export default function KnowledgeGraph() {
             }`}
           >
             <div className="p-4 border-b">
-              <h1 className="text-xl text-black font-bold">년도</h1>
+              <h1 className="text-xl text-black font-bold">노드 정보</h1>
+              {renderMainInfo(extractMainInfo(nodeInfo))}
             </div>
-
-            {/* 메인 배너 */}
-            <div className="relative p-3 bg-gray-200 border-b">
-              <div className="flex items-start">
-                <div className="flex-1">
-                  <div className="text-sm text-black font-medium">사건 이름</div>
-                  <div className="text-xs text-black">성명</div>
-                  <div className="text-xs text-black">간단한 설명</div>
-                </div>
-              </div>
-            </div>
+            {renderNeighborInfo(neighborInfos)}
 
             {/* 설명 섹션 */}
             <div className="p-4 border-b">
@@ -103,27 +217,7 @@ export default function KnowledgeGraph() {
               </div>
 
               {/* 이미지 아이템 */}
-              <div className="mb-4">
-                <div className="relative mb-2">
-                  <div className="w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
-                    <Image
-                      src="/images/main04_bg.png"
-                      alt="Place image"
-                      width={320}
-                      height={192}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-gray-700 font-medium">년도 또는 사건 또는 성명</div>
-                </div>
-                <div className="text-xs text-gray-500 mb-1">이름 또는 사건명</div>
-                <div className="text-xs text-gray-500 mb-2 truncate">
-                  설명글...
-                </div>
-              </div>
+              
             </div>
           </div>
 

@@ -1,13 +1,19 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 
 interface GraphComponentProps {
   onSelectNode?: (nodeKey: string | undefined) => void;
   selectedFile: string;
+  searchInputRef?: React.RefObject<HTMLInputElement>;
+  setSearchActive?: (active: boolean) => void;
+  dropdownOpen?: boolean;
+  setDropdownOpen?: (open: boolean) => void;
 }
 
-export default function GraphComponent({ onSelectNode, selectedFile }: GraphComponentProps) {
+export default function GraphComponent({ onSelectNode, selectedFile, searchInputRef, setSearchActive, dropdownOpen, setDropdownOpen }: GraphComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const datalistRef = useRef<HTMLDataListElement>(null);
@@ -143,7 +149,6 @@ export default function GraphComponent({ onSelectNode, selectedFile }: GraphComp
       // 이벤트 바인딩
       if (inputRef.current) {
         inputRef.current.oninput = () => setSearchQuery(inputRef.current!.value || "");
-        inputRef.current.onblur = () => setSearchQuery("");
       }
       renderer.on("enterNode", ({ node }: any) => {
         console.log("enterNode", node);
@@ -247,7 +252,6 @@ export default function GraphComponent({ onSelectNode, selectedFile }: GraphComp
       // 이벤트 바인딩도 새 setSearchQuery로 연결
       if (inputRef.current) {
         inputRef.current.oninput = () => setSearchQuery(inputRef.current!.value || "");
-        inputRef.current.onblur = () => setSearchQuery("");
       }
       renderer.on("enterNode", ({ node }: any) => setHoveredNode(node));
       renderer.on("leaveNode", () => setHoveredNode(undefined));
@@ -329,27 +333,67 @@ export default function GraphComponent({ onSelectNode, selectedFile }: GraphComp
     };
   }, [graphData]);
 
+  // inputRef를 외부에서 제어할 수 있게 연결
+  useEffect(() => {
+    if (searchInputRef && searchInputRef.current !== inputRef.current) {
+      // 외부에서 ref를 전달받으면 내부 inputRef와 동기화
+      (searchInputRef as any).current = inputRef.current;
+    }
+  }, [searchInputRef]);
+
+  // 검색창 포커스/블러/X버튼 처리
+  useEffect(() => {
+    if (!setSearchActive) return;
+    const input = inputRef.current;
+    if (!input) return;
+    const handleFocus = () => setSearchActive(true);
+    // blur에서는 더 이상 setSearchActive(false) 호출하지 않음
+    input.addEventListener('focus', handleFocus);
+    return () => {
+      input.removeEventListener('focus', handleFocus);
+    };
+  }, [setSearchActive]);
+
   return (
-    <div className="flex flex-col w-full h-full min-h-screen bg-gray-800">
+    <div className="flex flex-col w-full h-full min-h-screen bg-black">
       <div className="flex items-center gap-2 p-4 justify-end">
         <div className="relative w-64">
           <input
             ref={inputRef}
             id="search-input"
-            className="border rounded px-3 py-2 w-full pr-8"
+            className="border rounded px-3 py-2 w-full pr-8 bg-neutral-900 text-white placeholder-gray-300 focus:bg-neutral-800 focus:border-blue-400 transition-colors duration-150"
             placeholder="노드 이름 검색"
             list="suggestions"
             value={state.searchQuery}
             onChange={e => setSearchQueryRef.current(e.target.value)}
+            onFocus={() => {
+              setDropdownOpen && setDropdownOpen(true);
+              setSearchActive && setSearchActive(true);
+            }}
+            onBlur={() => {
+              setDropdownOpen && setDropdownOpen(false);
+            }}
           />
+          {/* 드롭다운 방향 아이콘 */}
+          <span className="absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer select-none">
+            {dropdownOpen ? (
+              <ChevronDown style={{ transform: 'rotate(180deg)' }} className="w-4 h-4 text-white transition-transform" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-white transition-transform" />
+            )}
+          </span>
           {state.searchQuery && (
             <button
               type="button"
               className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
               aria-label="검색어 지우기"
-              onClick={() => setSearchQueryRef.current("")}
+              onClick={() => {
+                setSearchQueryRef.current("");
+                if (setSearchActive) setSearchActive(false);
+              }}
+              style={{ padding: 0, background: 'none', border: 'none' }}
             >
-              X
+              <Image src="/images/icon-x.svg" alt="지우기" width={20} height={20} />
             </button>
           )}
           <datalist id="suggestions" ref={datalistRef} />
@@ -360,6 +404,25 @@ export default function GraphComponent({ onSelectNode, selectedFile }: GraphComp
           <div ref={containerRef} className="absolute inset-0 z-0 w-full h-full min-h-[500px] pointer-events-auto" />
         </div>
       </div>
+      {/* 드롭다운 input의 기본 화살표(▼)를 숨기는 CSS */}
+      <style jsx global>{`
+        input[list]::-webkit-calendar-picker-indicator {
+          opacity: 0;
+          display: none;
+        }
+        input[list]::-webkit-input-placeholder {
+          color: inherit;
+        }
+        input[list]::-ms-expand {
+          display: none;
+        }
+        input[list] {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          background: none;
+        }
+      `}</style>
     </div>
   );
 }

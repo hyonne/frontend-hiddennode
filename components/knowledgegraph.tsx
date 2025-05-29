@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ChevronRight, X, Clock, ChevronDown, Bookmark } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -15,10 +15,10 @@ export default function KnowledgeGraph() {
   // 데이터셋 버튼 핸들러 (각 버튼마다 파일명 코드에서 지정)
   const [activeDataset, setActiveDataset] = useState('test1.json');
   const datasetFiles = [
-    { name: '버튼 1', file: 'test1.json' }, // 여기에 원하는 파일명 입력
-    { name: '버튼 2', file: 'data.json' }, // 여기에 원하는 파일명 입력
+    { name: '버튼 1', file: 'testone.json' }, // 여기에 원하는 파일명 입력
+    { name: '버튼 2', file: 'test1.json' }, // 여기에 원하는 파일명 입력
     { name: '버튼 3', file: 'data.json' },
-    { name: '버튼 3', file: 'data.json' } // 여기에 원하는 파일명 입력
+    { name: '버튼 4', file: 'data.json' } // 여기에 원하는 파일명 입력
   ];
 
   useEffect(() => {
@@ -68,6 +68,15 @@ export default function KnowledgeGraph() {
     '판결시점': '판결시점',
   };
 
+  // 고정 라벨 순서 및 키 매핑
+  const FIXED_LABELS = [
+    { label: '주소', keys: ['주소', '본주거지'] },
+    { label: '년도', keys: ['년도', '연도'] },
+    { label: '이름', keys: ['이름', 'label'] },
+    { label: '죄명', keys: ['죄명'] },
+    { label: '사건개요', keys: ['사건개요'] },
+  ];
+
   function extractMainInfo(attr: any) {
     if (!attr) return [];
     const result: { label: string; value: string }[] = [];
@@ -116,28 +125,34 @@ export default function KnowledgeGraph() {
       </div>
     ));
   }
+  function renderFixedInfo(attr: any) {
+    if (!attr) return null;
+    return (
+      <div className="space-y-1">
+        {FIXED_LABELS.map(({ label, keys }) => {
+          const value = keys.map(k => attr[k]).find(v => !!v);
+          return (
+            <div key={label} className="flex justify-between text-black">
+              <span className="font-medium">{label}</span>
+              <span className="ml-2">{value || <span className="text-gray-400">정보 없음</span>}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+  // 관계 정보(이웃 노드)에서 이름만 보이게 렌더링
   function renderNeighborInfo(neighborInfos: any[]) {
     if (!neighborInfos || neighborInfos.length === 0) return null;
     return (
       <div className="p-4 border-b">
-        <h2 className="text-lg text-black font-bold mb-2">관계 노드정보</h2>
+        <h2 className="text-lg text-black font-bold mb-2">관계 정보</h2>
         {neighborInfos.map((info, idx) => {
-          const mainInfo = extractMainInfo(info);
-          if (mainInfo.length === 0) {
-            return (
-              <div key={idx} className="mb-2 p-2 bg-gray-100 rounded">
-                <div className="text-gray-400 text-xs">주요 정보 없음</div>
-              </div>
-            );
-          }
+          const name = info?.label || info?.이름 || info?.name || "이름 없음";
           return (
-            <div key={idx} className="mb-2 p-2 bg-gray-100 rounded">
-              {mainInfo.map((item, i) => (
-                <div key={i} className="flex justify-between text-xs text-black">
-                  <span className="font-medium text-black">{item.label}</span>
-                  <span className="ml-2 text-black">{item.value}</span>
-                </div>
-              ))}
+            <div key={idx} className="mb-2 p-2 bg-gray-100 rounded flex justify-between text-xs text-black">
+              <span className="font-medium text-black">node</span>
+              <span className="ml-2 text-black">{name}</span>
             </div>
           );
         })}
@@ -155,6 +170,40 @@ export default function KnowledgeGraph() {
       </div>
     );
   }
+
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  // 외부 클릭 시 노드 선택 해제, 검색창 드롭다운이 열려있으면(X버튼 누르기 전까지) 초기화하지 않음
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchActive, setSearchActive] = useState(false);
+
+  useEffect(() => {
+    function handlePointerDown(e: PointerEvent) {
+      // 검색창이 활성화되어 있으면(X버튼 누르기 전까지) 초기화하지 않음
+      if (searchActive) return;
+      // 사이드바가 열려있고, 사이드바 내부 클릭/드래그/텍스트 선택이면 무시
+      if (sidebarOpen && sidebarRef.current && sidebarRef.current.contains(e.target as Node)) {
+        return;
+      }
+      // 사이드바가 닫혀있을 때는 무조건 초기화
+      if (!sidebarOpen) {
+        setSelectedNode(undefined);
+        return;
+      }
+      // 사이드바가 열려있고, 클릭한 곳이 사이드바가 아니면 초기화
+      if (sidebarOpen && !(sidebarRef.current && sidebarRef.current.contains(e.target as Node))) {
+        setSelectedNode(undefined);
+      }
+    }
+    document.addEventListener("pointerdown", handlePointerDown, true);
+    return () => document.removeEventListener("pointerdown", handlePointerDown, true);
+  }, [sidebarOpen, searchActive]);
+
+  // 검색창 포커스/블러/X버튼 처리
+  // GraphComponent에 searchInputRef, setSearchActive prop 전달 필요
+
+  // 드롭다운 방향 상태
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <div className="flex w-full h-full bg-gray-100">
@@ -182,28 +231,33 @@ export default function KnowledgeGraph() {
 
             {/* 메인 이미지 */}
             <div className="w-full h-full">
-              <GraphComponent onSelectNode={setSelectedNode} selectedFile={activeDataset} />
+              <GraphComponent 
+                onSelectNode={setSelectedNode} 
+                selectedFile={activeDataset}
+                searchInputRef={searchInputRef}
+                setSearchActive={setSearchActive}
+                dropdownOpen={dropdownOpen}
+                setDropdownOpen={setDropdownOpen}
+              />
             </div>
           </div>
 
           {/* 사이드바 */}
           <div
+            ref={sidebarRef}
             className={`absolute top-0 left-0 h-full w-[350px] bg-gray-200 border-r overflow-y-auto transition-transform duration-300 z-30 ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
             <div className="p-4 border-b">
               <h1 className="text-xl text-black font-bold">노드 정보</h1>
-              {renderMainInfo(extractMainInfo(nodeInfo))}
+              {renderFixedInfo(nodeInfo)}
             </div>
-            {renderNeighborInfo(neighborInfos)}
+            {neighborInfos.length > 0 && renderNeighborInfo(neighborInfos)}
 
             {/* 설명 섹션 */}
             <div className="p-4 border-b">
-              <div className="flex items-center mb-4">
-                <h2 className="text-lg text-black font-bold">지식그래프 설명</h2>
-              </div>
-
+              
               {/* 탭 */}
               <div className="flex justify-between mb-4">
                 <div

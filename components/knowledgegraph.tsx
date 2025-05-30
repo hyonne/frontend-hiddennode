@@ -71,10 +71,10 @@ export default function KnowledgeGraph() {
   // 고정 라벨 순서 및 키 매핑
   const FIXED_LABELS = [
     { label: '주소', keys: ['주소', '본주거지'] },
-    { label: '년도', keys: ['년도', '연도'] },
+    { label: '판결시점', keys: ['판결시점'] }, // 판결시점으로 수정
     { label: '이름', keys: ['이름', 'label'] },
-    { label: '죄명', keys: ['죄명'] },
-    { label: '사건개요', keys: ['사건개요'] },
+    { label: '죄명', keys: ['주문'] }, // 주몬으로 수정
+    { label: '사건개요', keys: ['사건개요'] }, // 사건개요는 사건노드에 들어가야 함함
   ];
 
   function extractMainInfo(attr: any) {

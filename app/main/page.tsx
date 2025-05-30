@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import { Cube } from "@/components/cube";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // 클라이언트 컴포넌트를 불러오는 코드
 const StepperSection = dynamic(() => import("@/components/stepper-section"), {
@@ -22,12 +23,13 @@ const StepperSection = dynamic(() => import("@/components/stepper-section"), {
 });
 
 export default function Home() {
+  const router = useRouter();
+
   const steps = [
     {
       id: 1,
       title: "판결문 수집 및 엔티티 추출",
-      description: `판결문에서 인물, 사건, 장소와 같은
-정보를 추출합니다.`,
+      description: `판결문에서 인물, 사건, 장소와 같은 정보를 추출합니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -40,9 +42,7 @@ export default function Home() {
     {
       id: 2,
       title: "STI 기반 의미 연결",
-      description: `STI(Semantic Table Interpretation)
-방식으로 요소 간 의미 있는 관계를 
-연결하고 지식그래프를 구성합니다.`,
+      description: `STI(Semantic Table Interpretation) 방식으로 요소 간 의미 있는 관계를 연결하고 지식그래프를 구성합니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -55,9 +55,7 @@ export default function Home() {
     {
       id: 3,
       title: "지식그래프 시각화 탐색",
-      description: `시각화된 그래프에서 공적으로
- 알려지지 않은 독립운동의 흐름을 
-직접 탐색할 수 있습니다.`,
+      description: `시각화된 그래프에서 공적으로 알려지지 않은 독립운동의 흐름을 직접 탐색할 수 있습니다.`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -110,7 +108,10 @@ export default function Home() {
               <br />
               지식그래프로 이어지는 독립운동의 여정
             </h5>
-            <Button className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between">
+            <Button
+              className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between"
+              onClick={() => router.push("/graph")}
+            >
               <span>탐색 시작하기</span>
               <ArrowRight className="w-5 h-5" />
             </Button>
@@ -121,20 +122,19 @@ export default function Home() {
       {/* 섹션 02 - 독립운동 판결문 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] overflow-hidden">
         {/* 상단 배경 이미지 */}
-        <div className="absolute top-0 inset-x-0 h-[40%] z-0">
+        <div className="absolute top-0 inset-x-0 h-[40%] z-0 bg-black">
           <Image
-            src="/images/main03_1.png"
+            src="/images/main02.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#775977]/70" />
         </div>
 
         {/* 상단 제목 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-10 flex items-center px-8">
-          <span className="w-2 h-2 bg-white rounded-full mr-3" />
-          <div className="h-px bg-white w-16 mr-4" />
+          <span className="w-2 h-2 bg-black rounded-full mr-3" />
+          <div className="h-px bg-black w-16 mr-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white tracking-[0.35em]">
             <span className="bg-black/70 px-3 py-1">
               독립운동 판결문, 왜 중요할까요?
@@ -143,7 +143,7 @@ export default function Home() {
         </div>
 
         {/* 하단 배경 */}
-        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-white z-0" />
+        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black bg-opacity-80 z-0" />
 
         <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
           {/* 이미지 영역 */}
@@ -158,7 +158,7 @@ export default function Home() {
           </div>
 
           {/* 텍스트 영역 */}
-          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] text-gray-900">
+          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-gray-800 rounded-xl p-6 shadow text-white">
             <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
               교과서에 나오지 않는 기록이 있습니다.
               <br />
@@ -169,7 +169,7 @@ export default function Home() {
               <br />
               <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
             </p>
-            <button className="text-gray-500 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
+            <button className="text-gray-400 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
               탐색해보기 <span className="ml-1">&gt;</span>
             </button>
           </div>
@@ -180,24 +180,23 @@ export default function Home() {
       <section className="snap-start relative h-[calc(100vh-5rem)] bg-black overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-[30%] z-0">
           <Image
-            src="/images/main03_3.png"
+            src="/images/main03_bg.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#4f7581]/70" />
         </div>
         <div className="absolute top-0 inset-x-0 h-[30%] z-10 flex items-center justify-between px-8">
           <div className="flex items-center">
-            <span className="w-2 h-2 bg-white rounded-full mr-3" />
-            <div className="h-px bg-white w-16 mr-4" />
+            <span className="w-2 h-2 bg-black rounded-full mr-3" />
+            <div className="h-px bg-black w-16 mr-4" />
             <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
               <span className="bg-black/70 px-3 py-1">
                 사라진 영웅의 이름을 기억하는 방법.
               </span>
             </h2>
           </div>
-          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right">
+          <p className="text-sm md:text-base text-black tracking-[0.15em] text-right">
             숨겨진 독립운동을 되짚기 위해
             <br />
             우리는 세 가지에 집중합니다.
@@ -297,17 +296,16 @@ export default function Home() {
           />
         </div>
         <div className="max-w-4xl mx-auto h-full flex items-center justify-end relative z-10">
-          <div className="bg-white/5 backdrop-blur-sm p-8 rounded-lg text-right max-w-lg">
-            <h2 className="text-2xl font-bold mb-4">
+          <div className="bg-black/60 backdrop-blur-sm p-8 rounded-lg text-left max-w-lg">
+            <h2 className="text-2xl text-white font-bold mb-4">
               당신이 몰랐던 독립운동가의 이야기를 찾아보세요
             </h2>
-            <p className="text-base text-gray-300 leading-relaxed">
+            <p className="text-base text-white leading-relaxed">
               이 인물은 현재 인명사전에도 등재되지 않은 숨겨진 독립운동가입니다.
               <br />
-              판결문 속 이름을 기반으로 그래프를 구성한 결과, 1931년 ○○사건,
+              판결문 속 이름을 기반으로 그래프를 구성한 결과, 1931년 부정사건,
               <br />
-              ○○단체와의 연결이 확인되었고 이에 따라 독립운동 개입 가능성이
-              드러났습니다.
+              일본단체와의 연결이 확인되었고 이에 따라 독립운동 개입 가능성이 드러났습니다.
             </p>
           </div>
         </div>
@@ -315,7 +313,6 @@ export default function Home() {
 
       {/* 섹션 06 - 팀 소개 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -331,8 +328,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             HiddenNode 팀을 소개합니다.
@@ -345,7 +340,6 @@ export default function Home() {
 
       {/* 섹션 06-02 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -360,8 +354,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             이름 없는 기억을 잇는다는 것.
@@ -374,7 +366,6 @@ export default function Home() {
 
       {/* 섹션 06-03 */}
       <section className="w-full min-h-screen bg-black text-white px-4 flex flex-col justify-center">
-        {/* Cube + 설명 */}
         <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center gap-12 mb-24 mx-auto">
           <div className="w-full md:w-1/3 flex justify-center">
             <Cube />
@@ -389,7 +380,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 강조 텍스트: 왼쪽 하단 고정 */}
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
             이름 없는 기억을 잇는다는 것

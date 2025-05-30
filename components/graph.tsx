@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 interface GraphComponentProps {
   onSelectNode?: (nodeKey: string | undefined) => void;
   selectedFile: string;
-  searchInputRef?: React.RefObject<HTMLInputElement>;
+  searchInputRef?: React.RefObject<HTMLInputElement | null>;
   setSearchActive?: (active: boolean) => void;
   dropdownOpen?: boolean;
   setDropdownOpen?: (open: boolean) => void;
@@ -157,6 +157,11 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
       renderer.on("leaveNode", () => {
         console.log("leaveNode");
         setHoveredNode(undefined);
+      });
+      // 노드 클릭 시 검색창에 자동 입력
+      renderer.on("downNode", ({ node }: any) => {
+        const label = graph.getNodeAttribute(node, "label") ?? node;
+        setSearchQuery(label);
       });
       // 검색창에서 해당 노드를 검색하면 그 노드와 이웃만 남기고 블러 처리
       renderer.setSetting("nodeReducer", (node: string, data: any) => {
@@ -404,6 +409,8 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
           <div ref={containerRef} className="absolute inset-0 z-0 w-full h-full min-h-[500px] pointer-events-auto" />
         </div>
       </div>
+
+      
       {/* 드롭다운 input의 기본 화살표(▼)를 숨기는 CSS */}
       <style jsx global>{`
         input[list]::-webkit-calendar-picker-indicator {

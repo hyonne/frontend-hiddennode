@@ -8,7 +8,7 @@ import GraphComponent from "@/components/graph"
 
 export default function KnowledgeGraph() {
   const [activeTab, setActiveTab] = useState<string>("설명사이드바")
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [selectedNode, setSelectedNode] = useState<string | undefined>(undefined)
   const [graphData, setGraphData] = useState<any>(null)
 
@@ -71,10 +71,10 @@ export default function KnowledgeGraph() {
   // 고정 라벨 순서 및 키 매핑
   const FIXED_LABELS = [
     { label: '주소', keys: ['주소', '본주거지'] },
-    { label: '년도', keys: ['년도', '연도'] },
+    { label: '판결시점', keys: ['판결시점'] }, // 판결시점으로 수정
     { label: '이름', keys: ['이름', 'label'] },
-    { label: '죄명', keys: ['죄명'] },
-    { label: '사건개요', keys: ['사건개요'] },
+    { label: '죄명', keys: ['주문'] }, // 주몬으로 수정
+    { label: '사건개요', keys: ['사건개요'] }, // 사건개요는 사건노드에 들어가야 함함
   ];
 
   function extractMainInfo(attr: any) {
@@ -162,6 +162,10 @@ export default function KnowledgeGraph() {
 
   // 노드 정보 렌더링
   let nodeInfoBlock = null;
+  useEffect(() => {
+    // 노드가 선택되면 사이드바 자동 오픈
+    if (selectedNode) setSidebarOpen(true);
+  }, [selectedNode]);
   if (nodeInfo) {
     const mainInfo = extractMainInfo(nodeInfo);
     nodeInfoBlock = (
@@ -266,7 +270,7 @@ export default function KnowledgeGraph() {
                   }`}
                   onClick={() => setActiveTab("주변")}
                 >
-                  사진
+                  사진 없음
                 </div>
               </div>
 

@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 interface GraphComponentProps {
   onSelectNode?: (nodeKey: string | undefined) => void;
   selectedFile: string;
-  searchInputRef?: React.RefObject<HTMLInputElement>;
+  searchInputRef?: React.RefObject<HTMLInputElement | null>;
   setSearchActive?: (active: boolean) => void;
   dropdownOpen?: boolean;
   setDropdownOpen?: (open: boolean) => void;

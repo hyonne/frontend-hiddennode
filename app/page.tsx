@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import { Cube } from "@/components/cube";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // 클라이언트 컴포넌트를 불러오는 코드
 const StepperSection = dynamic(() => import("@/components/stepper-section"), {
@@ -22,6 +23,8 @@ const StepperSection = dynamic(() => import("@/components/stepper-section"), {
 });
 
 export default function Home() {
+  const router = useRouter();
+
   const steps = [
     {
       id: 1,
@@ -105,7 +108,10 @@ export default function Home() {
               <br />
               지식그래프로 이어지는 독립운동의 여정
             </h5>
-            <Button className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between">
+            <Button
+              className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between"
+              onClick={() => router.push("/graph")}
+            >
               <span>탐색 시작하기</span>
               <ArrowRight className="w-5 h-5" />
             </Button>
@@ -116,7 +122,7 @@ export default function Home() {
       {/* 섹션 02 - 독립운동 판결문 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] overflow-hidden">
         {/* 상단 배경 이미지 */}
-        <div className="absolute top-0 inset-x-0 h-[40%] z-0">
+        <div className="absolute top-0 inset-x-0 h-[40%] z-0 bg-black">
           <Image
             src="/images/main02.jpg"
             alt="배경 이미지"
@@ -137,7 +143,7 @@ export default function Home() {
         </div>
 
         {/* 하단 배경 */}
-        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black z-0" />
+        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black bg-opacity-80 z-0" />
 
         <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
           {/* 이미지 영역 */}
@@ -152,7 +158,7 @@ export default function Home() {
           </div>
 
           {/* 텍스트 영역 */}
-          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] text-wihte">
+          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-gray-800 rounded-xl p-6 shadow text-white">
             <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
               교과서에 나오지 않는 기록이 있습니다.
               <br />
@@ -163,7 +169,7 @@ export default function Home() {
               <br />
               <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
             </p>
-            <button className="text-gray-300 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
+            <button className="text-gray-400 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
               탐색해보기 <span className="ml-1">&gt;</span>
             </button>
           </div>
@@ -290,17 +296,16 @@ export default function Home() {
           />
         </div>
         <div className="max-w-4xl mx-auto h-full flex items-center justify-end relative z-10">
-          <div className="bg-white/5 backdrop-blur-sm p-8 rounded-lg text-right max-w-lg">
-            <h2 className="text-2xl font-bold mb-4">
+          <div className="bg-black/60 backdrop-blur-sm p-8 rounded-lg text-left max-w-lg">
+            <h2 className="text-2xl text-white font-bold mb-4">
               당신이 몰랐던 독립운동가의 이야기를 찾아보세요
             </h2>
-            <p className="text-base text-gray-300 leading-relaxed">
+            <p className="text-base text-white leading-relaxed">
               이 인물은 현재 인명사전에도 등재되지 않은 숨겨진 독립운동가입니다.
               <br />
-              판결문 속 이름을 기반으로 그래프를 구성한 결과, 1931년 ○○사건,
+              판결문 속 이름을 기반으로 그래프를 구성한 결과, 1931년 부정사건,
               <br />
-              ○○단체와의 연결이 확인되었고 이에 따라 독립운동 개입 가능성이
-              드러났습니다.
+              일본단체와의 연결이 확인되었고 이에 따라 독립운동 개입 가능성이 드러났습니다.
             </p>
           </div>
         </div>

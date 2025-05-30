@@ -8,7 +8,7 @@ import GraphComponent from "@/components/graph"
 
 export default function KnowledgeGraph() {
   const [activeTab, setActiveTab] = useState<string>("설명사이드바")
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [selectedNode, setSelectedNode] = useState<string | undefined>(undefined)
   const [graphData, setGraphData] = useState<any>(null)
 
@@ -162,6 +162,10 @@ export default function KnowledgeGraph() {
 
   // 노드 정보 렌더링
   let nodeInfoBlock = null;
+  useEffect(() => {
+    // 노드가 선택되면 사이드바 자동 오픈
+    if (selectedNode) setSidebarOpen(true);
+  }, [selectedNode]);
   if (nodeInfo) {
     const mainInfo = extractMainInfo(nodeInfo);
     nodeInfoBlock = (
@@ -266,7 +270,7 @@ export default function KnowledgeGraph() {
                   }`}
                   onClick={() => setActiveTab("주변")}
                 >
-                  사진
+                  사진 없음
                 </div>
               </div>
 

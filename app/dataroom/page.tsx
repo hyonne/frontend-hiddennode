@@ -129,33 +129,31 @@ export default function dataroom() {
 
         {/* Top Navigation */}
         <div className="flex flex-wrap text-xs md:text-sm border-b border-gray-300 gap-x-3 gap-y-1 py-1">
-          <NavItem text="V1" bgColor="bg-purple-500" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="정보마당" bgColor="bg-green-600" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="참여마당" bgColor="bg-green-500" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="소통" bgColor="bg-lime-500" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="정책정보" bgColor="bg-blue-600" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="행정정보공개" bgColor="bg-sky-400" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="국민신문고" bgColor="bg-blue-400" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="정책브리핑" bgColor="bg-green-300" textColor="text-black" className="px-3 py-1 rounded" />
-          <NavItem text="기관안내" bgColor="bg-purple-400" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="사전정보공표" bgColor="bg-pink-500" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="자료" bgColor="bg-purple-300" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="지원정보안내" bgColor="bg-blue-500" textColor="text-white" className="px-3 py-1 rounded" />
-          <NavItem text="지원" bgColor="bg-blue-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="csv" bgColor="bg-purple-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="1922" bgColor="bg-green-600" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="항일운동" bgColor="bg-green-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="1917" bgColor="bg-lime-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="1941" bgColor="bg-blue-600" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="1955" bgColor="bg-sky-400" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="인물정보" bgColor="bg-blue-400" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="판결사례" bgColor="bg-green-300" textColor="text-black" className="px-3 py-1 rounded" />
+          <NavItem text="사건개요" bgColor="bg-purple-400" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="사1923" bgColor="bg-pink-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="관계정보" bgColor="bg-blue-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="판결문" bgColor="bg-blue-500" textColor="text-white" className="px-3 py-1 rounded" />
+          <NavItem text="공공데이터셋" bgColor="bg-gray-400" textColor="text-white" className="px-3 py-1 rounded" />
+           <NavItem text="공공자료" bgColor="bg-gray-300" textColor="text-white" className="px-3 py-1 rounded" />
         </div>
 
         {/* Main Content */}
         <div className="py-8">
-          <h1 className="text-2xl font-bold text-center mb-8">콘텐츠</h1>
+          <h1 className="text-2xl font-bold text-center mb-8">자료실</h1>
 
           {/* Featured Content Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <FeaturedCard image="/placeholder.svg?height=200&width=300" title="집회모습 사진 학생들의 모습" number="1" />
-            <FeaturedCard image="/placeholder.svg?height=200&width=300" title="우 리나라의 상징" number="2" />
-            <FeaturedCard
-              image="/placeholder.svg?height=200&width=300"
-              title="6·10 민주항쟁을 되새 대한민국 민주화의"
-              number="3"
+            <FeaturedCard image="/images/main03_1.png?height=200&width=300" title="사진설명1" number="1" />
+            <FeaturedCard image="/images/main04_bg.png?height=200&width=300" title="사진설명2" number="2" />
+            <FeaturedCard image="/images/main02.jpg?height=200&width=300" title="사진설명3" number="3"
             />
           </div>
 
@@ -163,7 +161,7 @@ export default function dataroom() {
           <div className="overflow-x-auto border-t-2 border-b-2 border-blue-500">
             <table className="min-w-full">
               <thead>
-                <tr className="bg-gray-50 text-center">
+                <tr className="bg-gray-900 text-center">
                   <th className="px-4 py-2 border-b">번호</th>
                   <th className="px-4 py-2 border-b">제목</th>
                   <th className="px-4 py-2 border-b">작성자</th>
@@ -173,81 +171,31 @@ export default function dataroom() {
                 </tr>
               </thead>
               <tbody>
-                <TableRow
-                  id="399"
-                  title="2024년도 1회 기념식행사 관련 기관 대책회의"
-                  author="서울특별시"
-                  date="2024-06-07"
-                  views="6"
-                />
-                <TableRow
-                  id="398"
-                  title="2024년도 1회 기념식행사 관련 감독자 대책회의"
-                  author="서울특별시청"
-                  date="2024-04-18"
-                  views="12"
-                />
-                <TableRow
-                  id="397"
-                  title="2024년도 1회 기념식행사 관련 안전대책(1)"
-                  author="서울특별시청"
-                  date="2024-04-18"
-                  views="9"
-                />
-                <TableRow
-                  id="396"
-                  title="2024년도 1회 기념식행사 관련 안전대책 (1차안)"
-                  author="서울특별시청"
-                  date="2024-04-18"
-                  views="17"
-                />
-                <TableRow id="395" title="청사내 민원사무 개선" author="김영수" date="2022-11-29" views="30" />
-                <TableRow id="394" title="10개 지역 안내도" author="김영수" date="2022-05-20" views="43" />
-                <TableRow id="393" title="지방청 안전지침" author="김영수" date="2022-05-04" views="40" />
-                <TableRow
-                  id="392"
-                  title="위험안전지침 확인하세요(다수부서 이용시)"
-                  author="서울특별시청"
-                  date="2021-10-06"
-                  views="20"
-                />
-                <TableRow
-                  id="391"
-                  title="2021년도 1회 기념행사안내 수정안내 2"
-                  author="박민수"
-                  date="2021-04-16"
-                  views="12"
-                />
-                <TableRow
-                  id="390"
-                  title="2021년도 1회 기념행사안내 수정안 안내 1"
-                  author="박민수"
-                  date="2021-04-16"
-                  views="11"
-                />
-                <TableRow id="389" title="강남지역 행사안내입니다." author="서울특별시청" date="2020-08-29" views="34" />
-                <TableRow
-                  id="388"
-                  title="서울지역 안전지침안내 1차(수정안내사항)"
-                  author="박민수"
-                  date="2020-03-14"
-                  views="94"
-                />
-                <TableRow
-                  id="387"
-                  title="경기지 지역 1차(수정안내사항 안내)"
-                  author="박민수"
-                  date="2020-03-14"
-                  views="146"
-                />
-                <TableRow
-                  id="386"
-                  title="인천광역시 사회안전 1차(수정안내사항 확인안)"
-                  author="박민수"
-                  date="2020-03-14"
-                  views="423"
-                />
-                <TableRow id="385" title="4개지역 안전지침 (1차안)" author="서울특별시청" date="2020-03-13" views="107" />
+                <TableRow id="1" title="의열단 사건 판결문 요약" author="teamhiddennode" date="2025-03-02" views="13" />
+                <TableRow id="2" title="6.10 만세운동 주요 인물 및 판결 정보" author="teamhiddennode" date="2025-03-15" views="18" />
+                <TableRow id="3" title="광주학생운동 판결문 및 인물 관계" author="teamhiddennode" date="2025-03-28" views="22" />
+                <TableRow id="4" title="신간회 사건 요약 및 판결문 발췌" author="teamhiddennode" date="2025-04-04" views="15" />
+                <TableRow id="5" title="조선어학회 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-04-17" views="27" />
+                <TableRow id="6" title="대한독립단 사건 주요 판결문" author="teamhiddennode" date="2025-04-29" views="19" />
+                <TableRow id="7" title="흥사단 사건 인물 및 판결 요약" author="teamhiddennode" date="2025-05-03" views="24" />
+                <TableRow id="8" title="부민관 폭파사건 판결문 및 관계망" author="teamhiddennode" date="2025-05-10" views="16" />
+                <TableRow id="9" title="조선공산당 사건 판결문 요약" author="teamhiddennode" date="2025-05-18" views="21" />
+                <TableRow id="10" title="대한광복회 사건 인물 및 판결 정보" author="teamhiddennode" date="2025-05-25" views="14" />
+                <TableRow id="11" title="3.1운동 주요 인물 판결문" author="teamhiddennode" date="2025-06-01" views="25" />
+                <TableRow id="12" title="형평사 사건 판결문 및 인물 관계" author="teamhiddennode" date="2025-06-07" views="28" />
+                <TableRow id="13" title="조선학생과학연구회 사건 요약" author="teamhiddennode" date="2025-06-13" views="17" />
+                <TableRow id="14" title="조선민흥회 사건 판결문 발췌" author="teamhiddennode" date="2025-06-18" views="29" />
+                <TableRow id="15" title="신민회 사건 인물 및 판결 정보" author="teamhiddennode" date="2025-06-22" views="23" />
+                <TableRow id="16" title="대한광복군 사건 판결문 요약" author="teamhiddennode" date="2025-06-26" views="19" />
+                <TableRow id="17" title="조선건국동맹 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-03-07" views="21" />
+                <TableRow id="18" title="조선의용대 사건 판결문 발췌" author="teamhiddennode" date="2025-03-21" views="15" />
+                <TableRow id="19" title="대한민국임시정부 사건 요약" author="teamhiddennode" date="2025-04-09" views="24" />
+                <TableRow id="20" title="조선청년독립단 사건 판결문" author="teamhiddennode" date="2025-04-23" views="18" />
+                <TableRow id="21" title="조선노동조합전국평의회 사건" author="teamhiddennode" date="2025-05-06" views="22" />
+                <TableRow id="22" title="조선혁명군 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-05-15" views="17" />
+                <TableRow id="23" title="조선민족혁명당 사건 판결문 요약" author="teamhiddennode" date="2025-05-29" views="20" />
+                <TableRow id="24" title="조선여성동우회 사건 판결문" author="teamhiddennode" date="2025-06-04" views="14" />
+                <TableRow id="25" title="조선소년연맹 사건 판결문 및 인물 관계" author="teamhiddennode" date="2025-06-15" views="23" />
               </tbody>
             </table>
           </div>
@@ -313,7 +261,7 @@ function FeaturedCard({ image, title, number }: { image: string; title: string; 
   return (
     <div className="relative border border-gray-300">
       <Image
-        src={image || "/placeholder.svg"}
+        src={image || "/images/로고_검정ver.png"}
         alt={title}
         width={300}
         height={200}

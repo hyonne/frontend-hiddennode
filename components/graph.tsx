@@ -45,12 +45,8 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
     let graph: any;
     Promise.all([import("graphology"), import("sigma")]).then(([{ default: Graph }, { default: Sigma }]) => {
       // x, y 좌표 보정 및 type 속성 제거(또는 강제 'circle')
-      // e로 시작하는 key(사건개요)는 노드화에서 제외
+      //모든 노드를 노드화
       const nodesWithXY = graphData.nodes
-        .filter((node: any) => {
-          const key = node.key ?? node.id;
-          return typeof key === "string" ? !key.startsWith("e") : true;
-        })
         .map((node: any, idx: number) => {
           let x =
             typeof node.attributes?.x === "number"
@@ -73,7 +69,6 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
               ...restAttrs,
               x,
               y,
-              type: "circle",
               label: label ?? node.label ?? node.id ?? node.key ?? String(idx),
               size: typeof size === "number" && size > 0 ? size : 10,
             },
@@ -97,7 +92,6 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
         enableEdgeEvents: true,
         renderLabels: true,
         labelRenderedSizeThreshold: 0,
-        defaultNodeType: "circle",
       });
       renderer.refresh();
       renderer.refresh();

@@ -44,13 +44,8 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
     let renderer: any;
     let graph: any;
     Promise.all([import("graphology"), import("sigma")]).then(([{ default: Graph }, { default: Sigma }]) => {
-      // x, y 좌표 보정 및 type 속성 제거(또는 강제 'circle')
-      // e로 시작하는 key(사건개요)는 노드화에서 제외
+      //모든 노드를 노드화
       const nodesWithXY = graphData.nodes
-        .filter((node: any) => {
-          const key = node.key ?? node.id;
-          return typeof key === "string" ? !key.startsWith("e") : true;
-        })
         .map((node: any, idx: number) => {
           let x =
             typeof node.attributes?.x === "number"
@@ -73,7 +68,6 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
               ...restAttrs,
               x,
               y,
-              type: "circle",
               label: label ?? node.label ?? node.id ?? node.key ?? String(idx),
               size: typeof size === "number" && size > 0 ? size : 10,
             },
@@ -97,7 +91,6 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
         enableEdgeEvents: true,
         renderLabels: true,
         labelRenderedSizeThreshold: 0,
-        defaultNodeType: "circle",
       });
       renderer.refresh();
       renderer.refresh();
@@ -157,6 +150,11 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
       renderer.on("leaveNode", () => {
         console.log("leaveNode");
         setHoveredNode(undefined);
+      });
+      // 노드 클릭 시 검색창에 자동 입력
+      renderer.on("downNode", ({ node }: any) => {
+        const label = graph.getNodeAttribute(node, "label") ?? node;
+        setSearchQuery(label);
       });
       // 검색창에서 해당 노드를 검색하면 그 노드와 이웃만 남기고 블러 처리
       renderer.setSetting("nodeReducer", (node: string, data: any) => {
@@ -404,6 +402,8 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
           <div ref={containerRef} className="absolute inset-0 z-0 w-full h-full min-h-[500px] pointer-events-auto" />
         </div>
       </div>
+
+      
       {/* 드롭다운 input의 기본 화살표(▼)를 숨기는 CSS */}
       <style jsx global>{`
         input[list]::-webkit-calendar-picker-indicator {

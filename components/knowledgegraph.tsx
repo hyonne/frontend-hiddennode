@@ -16,7 +16,7 @@ export default function KnowledgeGraph() {
   const [activeDataset, setActiveDataset] = useState('test1.json');
   const datasetFiles = [
     { name: '버튼 1', file: 'testone.json' }, // 여기에 원하는 파일명 입력
-    { name: '버튼 2', file: 'test1.json' }, // 여기에 원하는 파일명 입력
+    { name: '버튼 2', file: 'testone.json' }, // 여기에 원하는 파일명 입력
     { name: '버튼 3', file: 'data.json' },
     { name: '버튼 4', file: 'data.json' } // 여기에 원하는 파일명 입력
   ];
@@ -60,6 +60,7 @@ export default function KnowledgeGraph() {
     '죄명': '죄명',
     '사건': '사건개요',
     '사건개요': '사건개요',
+    '개요' : '개요',
     'label': '이름',
     'type': '유형',
     '나이': '나이',
@@ -74,7 +75,7 @@ export default function KnowledgeGraph() {
     { label: '판결시점', keys: ['판결시점'] }, // 판결시점으로 수정
     { label: '이름', keys: ['이름', 'label'] },
     { label: '죄명', keys: ['주문'] }, // 주몬으로 수정
-    { label: '사건개요', keys: ['사건개요'] }, // 사건개요는 사건노드에 들어가야 함함
+    { label: '사건개요', keys: ['사건개요'] },
   ];
 
   function extractMainInfo(attr: any) {
@@ -148,7 +149,19 @@ export default function KnowledgeGraph() {
       <div className="p-4 border-b">
         <h2 className="text-lg text-black font-bold mb-2">관계 정보</h2>
         {neighborInfos.map((info, idx) => {
-          const name = info?.label || info?.이름 || info?.name || "이름 없음";
+          let name = "이름 없음";
+          const type = info?.type || info?.attributes?.type;
+          if (type === '사건') {
+            name = info['개요'] || info['사건개요'] ||
+                   (info.attributes && (info.attributes['개요'] || info.attributes['사건개요'])) ||
+                   info['label'] || info['이름'] || info['name'] ||
+                   (info.attributes && (info.attributes['label'] || info.attributes['이름'] || info.attributes['name'])) ||
+                   "이름 없음";
+          } else {
+            name = info['label'] || info['이름'] || info['name'] ||
+                   (info.attributes && (info.attributes['label'] || info.attributes['이름'] || info.attributes['name'])) ||
+                   "이름 없음";
+          }
           return (
             <div key={idx} className="mb-2 p-2 bg-gray-100 rounded flex justify-between text-xs text-black">
               <span className="font-medium text-black">node</span>
@@ -255,7 +268,12 @@ export default function KnowledgeGraph() {
           >
             <div className="p-4 border-b">
               <h1 className="text-xl text-black font-bold">노드 정보</h1>
-              {renderFixedInfo(nodeInfo)}
+              {/* e로 시작하는 key면 개요로, 아니면 기존대로 */}
+              {selectedNode && selectedNode.startsWith('e') && nodeInfo && nodeInfo['개요'] ? (
+                <div className="text-black whitespace-pre-line">{nodeInfo['개요']}</div>
+              ) : (
+                renderFixedInfo(nodeInfo)
+              )}
             </div>
             {neighborInfos.length > 0 && renderNeighborInfo(neighborInfos)}
 

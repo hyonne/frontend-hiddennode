@@ -5,7 +5,7 @@
       "attributes": {
         "x": 268.72385,
         "y": 91.18155,
-        "size": 22.714287,
+        "size": 7,
         "label": "Myriel",
         "color": "#D8482D"
       }
@@ -15,7 +15,7 @@
       "attributes": {
         "x": 296.39902,
         "y": 57.118374,
-        "size": 15,
+        "size": 4,
         "label": "Napoleon",
         "color": "#B30000"
       }
@@ -55,7 +55,7 @@
       "attributes": {
         "x": 318.6509,
         "y": 85.41602,
-        "size": 15,
+        "size": 10,
         "label": "Geborand",
         "color": "#B30000"
       }

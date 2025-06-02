@@ -44,7 +44,6 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
     let renderer: any;
     let graph: any;
     Promise.all([import("graphology"), import("sigma")]).then(([{ default: Graph }, { default: Sigma }]) => {
-      // x, y 좌표 보정 및 type 속성 제거(또는 강제 'circle')
       //모든 노드를 노드화
       const nodesWithXY = graphData.nodes
         .map((node: any, idx: number) => {

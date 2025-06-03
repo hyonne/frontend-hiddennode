@@ -13,12 +13,18 @@ export default function KnowledgeGraph() {
   const [graphData, setGraphData] = useState<any>(null)
 
   // 데이터셋 버튼 핸들러 (각 버튼마다 파일명 코드에서 지정)
-  const [activeDataset, setActiveDataset] = useState('test1.json');
+  const [activeDataset, setActiveDataset] = useState('전체.json');
   const datasetFiles = [
-    { name: '버튼 1', file: 'testone.json' }, // 여기에 원하는 파일명 입력
-    { name: '버튼 2', file: 'testone.json' }, // 여기에 원하는 파일명 입력
-    { name: '버튼 3', file: 'data.json' },
-    { name: '버튼 4', file: 'data.json' } // 여기에 원하는 파일명 입력
+    { name: '전체', file: '전체.json' },
+    { name: '함경도', file: '함경도.json' }, // 여기에 원하는 파일명 입력
+    { name: '평안도', file: '평안도.json' }, // 여기에 원하는 파일명 입력
+    { name: '황해도', file: '황해도.json' },
+    { name: '강원도', file: '강원도.json' }, // 여기에 원하는 파일명 입력
+    { name: '경기도', file: '경기도.json' },
+    { name: '충청도', file: '충청도.json' }, // 여기에 원하는 파일명 입력
+    { name: '전라도', file: '전라도.json' },
+    { name: '경상도', file: '경상도.json' }, // 여기에 원하는 파일명 입력
+    { name: '기타', file: '기타타.json' }
   ];
 
   useEffect(() => {
@@ -74,7 +80,7 @@ export default function KnowledgeGraph() {
     { label: '주소', keys: ['주소', '본주거지'] },
     { label: '판결시점', keys: ['판결시점'] }, // 판결시점으로 수정
     { label: '이름', keys: ['이름', 'label'] },
-    { label: '죄명', keys: ['주문'] }, // 주몬으로 수정
+    { label: '주문', keys: ['주문'] }, 
     { label: '사건개요', keys: ['사건개요'] },
   ];
 
@@ -96,10 +102,6 @@ export default function KnowledgeGraph() {
     // 죄명
     if (attr.type === '죄명' || attr['type'] === '죄명' || attr['label']?.includes('죄')) {
       result.push({ label: '죄명', value: attr['label'] });
-    }
-    // 사건개요(사건)
-    if (attr.type === '사건' || attr['사건개요'] || (attr['label'] && attr['label'].length > 30)) {
-      result.push({ label: '사건개요', value: attr['label'] });
     }
     // 기타 주요 속성
     ['나이', '주문', '판결시점'].forEach((k) => {

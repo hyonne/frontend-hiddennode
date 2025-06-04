@@ -155,6 +155,7 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
       renderer.on("downNode", ({ node }: any) => {
         const label = graph.getNodeAttribute(node, "label") ?? node;
         setSearchQuery(label);
+        setSelectedNode(node); // 노드 클릭시 경성 노드정보 표시 수정1
       });
       // 검색창에서 해당 노드를 검색하면 그 노드와 이웃만 남기고 블러 처리
       renderer.setSetting("nodeReducer", (node: string, data: any) => {
@@ -218,12 +219,17 @@ export default function GraphComponent({ onSelectNode, selectedFile, searchInput
               return { id: n as string, label: typeof label === "string" ? label : "" };
             })
             .filter(({ label }: { label: string }) => label.toLowerCase().includes(lcQuery));
-          if (suggestionsArr.length === 1 && suggestionsArr[0].label === query) {
+          const exactMatch = suggestionsArr.find((s: { id: string; label: string }) => s.label === query);
+          if (exactMatch) {   // 정확히 일치하는 노드가 있을 때 (대구 검색 시 강대구 현상 해결) 수정3
+            setSelectedNode(exactMatch.id);
+            const nodePosition = renderer.getNodeDisplayData(exactMatch.id);
+            if (nodePosition) renderer.getCamera().animate(nodePosition, { duration: 500 });
+          } else if (suggestionsArr.length >= 1) {  // 기존 조건 (너무 엄격함) 수정2
             setSelectedNode(suggestionsArr[0].id);
             // 카메라 이동 (검색에서만)
             const nodePosition = renderer.getNodeDisplayData(suggestionsArr[0].id);
-            if (nodePosition) renderer.getCamera().animate(nodePosition, { duration: 500 });
-          } else {
+            if (nodePosition) renderer.getCamera().animate(nodePosition, { duration: 500 });}  
+            else {
             setSelectedNode(undefined);
             setState((prev) => {
               const next = {

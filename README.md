@@ -100,7 +100,7 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 
 ```bash
 git clone https://github.com/Donga-SW/frontend.git
-cd hidden-node
+cd frontend
 npm install
 npm run dev
 ```

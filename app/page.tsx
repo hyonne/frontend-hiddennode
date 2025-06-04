@@ -125,23 +125,23 @@ export default function Home() {
       </section>
 
 
-     {/* 섹션 02 - 독립운동 판결문 */}
+       {/* 섹션 02 - 독립운동 판결문 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] overflow-hidden">
         {/* 상단 배경 이미지 */}
-        <div className="absolute top-0 inset-x-0 h-[40%] z-0">
+        <div className="absolute top-0 inset-x-0 h-[40%] z-0 bg-black">
           <Image
             src="/images/main02.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#775977]/70"/>
+          <div className="absolute inset-0 bg-[#775977]/30"/>
         </div>
 
         {/* 상단 제목 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-10 flex items-center px-8">
-          <span className="w-2 h-2 bg-white rounded-full mr-3" />
-          <div className="h-px bg-white w-16 mr-4" />
+          <span className="w-2 h-2 bg-black rounded-full mr-3" />
+          <div className="h-px bg-black w-16 mr-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white tracking-[0.35em]">
             <span className="bg-black/70 px-3 py-1">
               독립운동 판결문, 왜 중요할까요?
@@ -150,71 +150,68 @@ export default function Home() {
         </div>
 
         {/* 하단 배경 */}
-        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-white bg-opacity-100 z-0" />
+        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black bg-opacity-80 z-0" />
 
-        <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-row items-center px-6">
-        {/* 이미지 영역 */}
-        <div className="w-[clamp(350px,30vw,550px)] h-auto mb-6 md:mb-0 ml-[350px]">
-          <Image
-            src="/images/main01.png"
-            alt="맥북 gif 이미지"
-            width={550}
-            height={350}
-            className="object-contain w-full h-auto rounded shadow-lg"
-          />
-        </div>
+        <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
+          {/* 이미지 영역 */}
+          <div className="w-[clamp(220px,30vw,300px)] h-auto mb-6 md:mb-0">
+            <Image
+              src="/images/main01.png"
+              alt="맥북 gif 이미지"
+              width={500}
+              height={400}
+              className="object-contain w-full h-auto rounded shadow-lg"
+            />
+          </div>
 
-        {/* 텍스트 영역 */}
-        <div className="w-[clamp(320px,40vw,600px)] ml-auto md:mr-12 space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-white rounded-xl p-6 shadow text-white">
-          <p className="text-gray-900 text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
-            교과서에 나오지 않는 기록이 있습니다.
-            <br />
-            그건 바로, 일제에 체포된 사람들의 <strong>재판 기록</strong>입니다.
-            <br />
-            우리는 이 판결문 속 <strong>잊혀진 인물</strong>들로부터
-            <br />
-            <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
-          </p>
-          <button className="text-gray-500 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
-            탐색해보기 <span className="ml-1">&gt;</span>
-          </button>
+          {/* 텍스트 영역 */}
+          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-gray-800 rounded-xl p-6 shadow text-white">
+            <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
+              교과서에 나오지 않는 기록이 있습니다.
+              <br />
+              그건 바로, 일제에 체포된 사람들의 <strong>재판 기록</strong>
+              입니다.
+              <br />
+              우리는 이 판결문 속 <strong>잊혀진 인물</strong>들로부터
+              <br />
+              <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
+            </p>
+            <button className="text-gray-400 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
+              탐색해보기 <span className="ml-1">&gt;</span>
+            </button>
+          </div>
         </div>
-      </div>
       </section>
 
       {/* 섹션 03 - 카드 섹션 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] bg-black overflow-hidden">
-    <div className="relative w-full h-[160px]">
-      {/* 배경 이미지 */}
-      <Image
-        src="/images/main03_bg.jpg"
-        alt="배경 이미지"
-        fill
-        className="object-cover"
-      />
-      
-      {/* 오버레이 (흐림 효과도 가능) */}
-      <div className="absolute inset-0 bg-black/60 z-10" />
-
-      {/* 텍스트 라인 + 우측 설명 */}
-      <div className="absolute inset-0 z-20 flex items-center justify-between px-10 text-white">
-        {/* 왼쪽 텍스트 */}
-        <div className="flex items-center">
-          <div className="h-px bg-white w-96 -ml-10 mr-0"></div>
-          <div className="w-2 h-2 bg-white rounded-full mr-6"></div>
-          <h2 className="text-2xl font-semibold tracking-wide">
-            사라진 이름을 기억하는 방법
-          </h2>
+        <div className="absolute top-0 inset-x-0 h-[30%] z-0">
+          <Image
+            src="/images/main03_bg.jpg"
+            alt="배경 이미지"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60"/>
         </div>
-        {/* 오른쪽 설명 */}
-        <div className="text-right text-base md:text-lg leading-relaxed pr-8">
-          <p>숨겨진 독립운동을 되짚기 위해</p>
-          <p>우리는 세 가지에 집중합니다.</p>
+        <div className="absolute top-0 inset-x-0 h-[30%] z-10 flex items-center justify-between px-8">
+          <div className="flex items-center">
+            <span className="w-2 h-2 bg-white rounded-full mr-3" />
+            <div className="h-px bg-white w-16 mr-4" />
+            <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
+              <span className="bg-black/70 px-3 py-1">
+                사라진 영웅의 이름을 기억하는 방법.
+              </span>
+            </h2>
+          </div>
+          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right">
+            숨겨진 독립운동을 되짚기 위해
+            <br />
+            우리는 세 가지에 집중합니다.
+          </p>
         </div>
-      </div>
-    </div>
         <div className="absolute bottom-0 inset-x-0 h-[70%] z-20 flex items-center justify-center px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[190px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
             {/* 카드 1 */}
             <Card className="bg-black border border-gray-800 overflow-hidden">
               <div className="p-6 space-y-4">

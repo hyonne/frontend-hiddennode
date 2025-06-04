@@ -24,7 +24,7 @@ export default function KnowledgeGraph() {
     { name: '충청도', file: '충청도.json' }, // 여기에 원하는 파일명 입력
     { name: '전라도', file: '전라도.json' },
     { name: '경상도', file: '경상도.json' }, // 여기에 원하는 파일명 입력
-    { name: '기타', file: '기타타.json' }
+    { name: '기타', file: '기타.json' }
   ];
 
   useEffect(() => {
@@ -74,14 +74,13 @@ export default function KnowledgeGraph() {
     '본주거지': '주소',
     '판결시점': '판결시점',
   };
-
   // 고정 라벨 순서 및 키 매핑
   const FIXED_LABELS = [
     { label: '주소', keys: ['주소', '본주거지'] },
     { label: '판결시점', keys: ['판결시점'] }, // 판결시점으로 수정
     { label: '이름', keys: ['이름', 'label'] },
     { label: '주문', keys: ['주문'] }, 
-    { label: '사건개요', keys: ['사건개요'] },
+    { label: 'URI', keys: ['uri'] },  // 사건개요 URI로 수정 수정4
   ];
 
   function extractMainInfo(attr: any) {
@@ -137,7 +136,20 @@ export default function KnowledgeGraph() {
           return (
             <div key={label} className="flex justify-between text-black">
               <span className="font-medium">{label}</span>
-              <span className="ml-2">{value || <span className="text-gray-400">정보 없음</span>}</span>
+              <span className="ml-2">
+                {label === 'URI' && value ? (   // URI a태그 달았음 수정5
+                  <a
+                    href={value}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline break-all"
+                  >
+                    {value}
+                  </a>
+                ) : (
+                  value || <span className="text-gray-400">정보 없음</span>
+                )}
+              </span>
             </div>
           );
         })}

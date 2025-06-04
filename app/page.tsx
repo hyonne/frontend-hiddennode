@@ -178,32 +178,37 @@ export default function Home() {
 
       {/* 섹션 03 - 카드 섹션 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] bg-black overflow-hidden">
-        <div className="absolute top-0 inset-x-0 h-[30%] z-0">
-          <Image
-            src="/images/main03_bg.jpg"
-            alt="배경 이미지"
-            fill
-            className="object-cover"
-          />
+    <div className="relative w-full h-[160px]">
+      {/* 배경 이미지 */}
+      <Image
+        src="/images/main03_bg.jpg"
+        alt="배경 이미지"
+        fill
+        className="object-cover"
+      />
+      
+      {/* 오버레이 (흐림 효과도 가능) */}
+      <div className="absolute inset-0 bg-black/60 z-10" />
+
+      {/* 텍스트 라인 + 우측 설명 */}
+      <div className="absolute inset-0 z-20 flex items-center justify-between px-10 text-white">
+        {/* 왼쪽 텍스트 */}
+        <div className="flex items-center">
+          <div className="h-px bg-white w-96 -ml-10 mr-0"></div>
+          <div className="w-2 h-2 bg-white rounded-full mr-6"></div>
+          <h2 className="text-2xl font-semibold tracking-wide">
+            사라진 이름을 기억하는 방법
+          </h2>
         </div>
-        <div className="absolute top-0 inset-x-0 h-[30%] z-10 flex items-center justify-between px-8">
-          <div className="flex items-center">
-            <span className="w-2 h-2 bg-black rounded-full mr-3" />
-            <div className="h-px bg-black w-16 mr-4" />
-            <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
-              <span className="bg-black/70 px-3 py-1">
-                사라진 영웅의 이름을 기억하는 방법.
-              </span>
-            </h2>
-          </div>
-          <p className="text-sm md:text-base text-black tracking-[0.15em] text-right">
-            숨겨진 독립운동을 되짚기 위해
-            <br />
-            우리는 세 가지에 집중합니다.
-          </p>
+        {/* 오른쪽 설명 */}
+        <div className="text-right text-base md:text-lg leading-relaxed pr-8">
+          <p>숨겨진 독립운동을 되짚기 위해</p>
+          <p>우리는 세 가지에 집중합니다.</p>
         </div>
+      </div>
+    </div>
         <div className="absolute bottom-0 inset-x-0 h-[70%] z-20 flex items-center justify-center px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[190px]">
             {/* 카드 1 */}
             <Card className="bg-black border border-gray-800 overflow-hidden">
               <div className="p-6 space-y-4">

@@ -91,50 +91,57 @@ export default function Home() {
             조각을 연결하다.
           </h1>
           <p className="mt-8 text-base md:text-lg text-white/80 text-center max-w-2xl tracking-[0.10em]">
-            판결문 속 인물, 잊힌 사건, 알려지지 않은 항쟁을 지식그래프로
-            밝혀냅니다.
+            판결문 속 인물, 잊힌 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
           </p>
         </div>
-        <div className="z-10 w-full h-full flex items-end justify-start px-4 pb-8">
-          <div className="relative backdrop-blur-md bg-white/30 border border-white/40 rounded-xl shadow-xl w-full max-w-md space-y-4 ml-4 mb-4 p-6">
-            <h2 className="text-3xl md:text-4xl text-black font-bold tracking-wide leading-tight">
-              Welcome to
-              <br /> HiddenNode
-            </h2>
-            <h5 className="text-sm md:text-base text-gray-700 font-medium whitespace-pre-line leading-relaxed">
-              숨겨진 이름, 잊힌 기록
-              <br />
-              판결문과 사건을 따라
-              <br />
-              지식그래프로 이어지는 독립운동의 여정
-            </h5>
-            <Button
-              className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between"
-              onClick={() => router.push("/graph")}
+        <div className="z-10 w-full h-full flex flex-col justify-end px-4 pb-12">
+          <div className="ml-8 md:ml-16">
+            <div
+              className="
+                bg-white p-5 rounded-lg shadow-lg
+                flex flex-col items-start justify-center
+                w-full max-w-md
+                h-56 md:h-64 lg:h-[350px]
+              "
             >
-              <span>탐색 시작하기</span>
-              <ArrowRight className="w-5 h-5" />
-            </Button>
+              <h2 className="text-4xl md:text-4xl mb-4 text-black font-bold tracking-[0.05em]">
+                Welcome to<br /> HiddenNode
+              </h2>
+              <h5 className="text-base md:text-lg mb-6 text-gray-500 font-medium whitespace-pre-line">
+                숨겨진 이름, 잊힌 기록<br />
+                판결문과 사건을 따라<br />
+                지식그래프로 이어지는 독립운동의 여정
+              </h5>
+              <Button
+                onClick={() => router.push("/graph")}
+                className="flex items-center justify-between w-full px-6 py-7 bg-black text-white text-lg hover:bg-black/90"
+              >
+                <span>탐색 시작하기</span>
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 섹션 02 - 독립운동 판결문 */}
+
+     {/* 섹션 02 - 독립운동 판결문 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] overflow-hidden">
         {/* 상단 배경 이미지 */}
-        <div className="absolute top-0 inset-x-0 h-[40%] z-0 bg-black">
+        <div className="absolute top-0 inset-x-0 h-[40%] z-0">
           <Image
             src="/images/main02.jpg"
             alt="배경 이미지"
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-[#775977]/70"/>
         </div>
 
         {/* 상단 제목 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-10 flex items-center px-8">
-          <span className="w-2 h-2 bg-black rounded-full mr-3" />
-          <div className="h-px bg-black w-16 mr-4" />
+          <span className="w-2 h-2 bg-white rounded-full mr-3" />
+          <div className="h-px bg-white w-16 mr-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white tracking-[0.35em]">
             <span className="bg-black/70 px-3 py-1">
               독립운동 판결문, 왜 중요할까요?
@@ -143,37 +150,36 @@ export default function Home() {
         </div>
 
         {/* 하단 배경 */}
-        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-black bg-opacity-80 z-0" />
+        <div className="absolute bottom-0 inset-x-0 h-[60%] bg-white bg-opacity-100 z-0" />
 
-        <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
-          {/* 이미지 영역 */}
-          <div className="w-[clamp(220px,30vw,300px)] h-auto mb-6 md:mb-0">
-            <Image
-              src="/images/main01.png"
-              alt="맥북 gif 이미지"
-              width={500}
-              height={400}
-              className="object-contain w-full h-auto rounded shadow-lg"
-            />
-          </div>
-
-          {/* 텍스트 영역 */}
-          <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-gray-800 rounded-xl p-6 shadow text-white">
-            <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
-              교과서에 나오지 않는 기록이 있습니다.
-              <br />
-              그건 바로, 일제에 체포된 사람들의 <strong>재판 기록</strong>
-              입니다.
-              <br />
-              우리는 이 판결문 속 <strong>잊혀진 인물</strong>들로부터
-              <br />
-              <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
-            </p>
-            <button className="text-gray-400 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
-              탐색해보기 <span className="ml-1">&gt;</span>
-            </button>
-          </div>
+        <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-row items-center px-6">
+        {/* 이미지 영역 */}
+        <div className="w-[clamp(350px,30vw,550px)] h-auto mb-6 md:mb-0 ml-[350px]">
+          <Image
+            src="/images/main01.png"
+            alt="맥북 gif 이미지"
+            width={550}
+            height={350}
+            className="object-contain w-full h-auto rounded shadow-lg"
+          />
         </div>
+
+        {/* 텍스트 영역 */}
+        <div className="w-[clamp(320px,40vw,600px)] ml-auto md:mr-12 space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-white rounded-xl p-6 shadow text-white">
+          <p className="text-gray-900 text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
+            교과서에 나오지 않는 기록이 있습니다.
+            <br />
+            그건 바로, 일제에 체포된 사람들의 <strong>재판 기록</strong>입니다.
+            <br />
+            우리는 이 판결문 속 <strong>잊혀진 인물</strong>들로부터
+            <br />
+            <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
+          </p>
+          <button className="text-gray-500 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
+            탐색해보기 <span className="ml-1">&gt;</span>
+          </button>
+        </div>
+      </div>
       </section>
 
       {/* 섹션 03 - 카드 섹션 */}

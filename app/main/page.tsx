@@ -91,35 +91,41 @@ export default function Home() {
             조각을 연결하다.
           </h1>
           <p className="mt-8 text-base md:text-lg text-white/80 text-center max-w-2xl tracking-[0.10em]">
-            판결문 속 인물, 잊힌 사건, 알려지지 않은 항쟁을 지식그래프로
-            밝혀냅니다.
+            판결문 속 인물, 잊힌 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
           </p>
         </div>
-        <div className="z-10 w-full h-full flex items-end justify-start px-4 pb-8">
-          <div className="relative backdrop-blur-md bg-white/30 border border-white/40 rounded-xl shadow-xl w-full max-w-md space-y-4 ml-4 mb-4 p-6">
-            <h2 className="text-3xl md:text-4xl text-black font-bold tracking-wide leading-tight">
-              Welcome to
-              <br /> HiddenNode
-            </h2>
-            <h5 className="text-sm md:text-base text-gray-700 font-medium whitespace-pre-line leading-relaxed">
-              숨겨진 이름, 잊힌 기록
-              <br />
-              판결문과 사건을 따라
-              <br />
-              지식그래프로 이어지는 독립운동의 여정
-            </h5>
-            <Button
-              className="w-full px-6 py-4 bg-black text-white text-base md:text-lg hover:bg-black/90 flex items-center justify-between"
-              onClick={() => router.push("/graph")}
+        <div className="z-10 w-full h-full flex flex-col justify-end px-4 pb-12">
+          <div className="ml-8 md:ml-16">
+            <div
+              className="
+                bg-white p-5 rounded-lg shadow-lg
+                flex flex-col items-start justify-center
+                w-full max-w-md
+                h-56 md:h-64 lg:h-[350px]
+              "
             >
-              <span>탐색 시작하기</span>
-              <ArrowRight className="w-5 h-5" />
-            </Button>
+              <h2 className="text-4xl md:text-4xl mb-4 text-black font-bold tracking-[0.05em]">
+                Welcome to<br /> HiddenNode
+              </h2>
+              <h5 className="text-base md:text-lg mb-6 text-gray-500 font-medium whitespace-pre-line">
+                숨겨진 이름, 잊힌 기록<br />
+                판결문과 사건을 따라<br />
+                지식그래프로 이어지는 독립운동의 여정
+              </h5>
+              <Button
+                onClick={() => router.push("/graph")}
+                className="flex items-center justify-between w-full px-6 py-7 bg-black text-white text-lg hover:bg-black/90"
+              >
+                <span>탐색 시작하기</span>
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 섹션 02 - 독립운동 판결문 */}
+
+       {/* 섹션 02 - 독립운동 판결문 */}
       <section className="snap-start relative h-[calc(100vh-5rem)] overflow-hidden">
         {/* 상단 배경 이미지 */}
         <div className="absolute top-0 inset-x-0 h-[40%] z-0 bg-black">
@@ -129,6 +135,7 @@ export default function Home() {
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-[#775977]/30"/>
         </div>
 
         {/* 상단 제목 */}
@@ -185,18 +192,19 @@ export default function Home() {
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-black/60"/>
         </div>
         <div className="absolute top-0 inset-x-0 h-[30%] z-10 flex items-center justify-between px-8">
           <div className="flex items-center">
-            <span className="w-2 h-2 bg-black rounded-full mr-3" />
-            <div className="h-px bg-black w-16 mr-4" />
+            <span className="w-2 h-2 bg-white rounded-full mr-3" />
+            <div className="h-px bg-white w-16 mr-4" />
             <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
               <span className="bg-black/70 px-3 py-1">
                 사라진 영웅의 이름을 기억하는 방법.
               </span>
             </h2>
           </div>
-          <p className="text-sm md:text-base text-black tracking-[0.15em] text-right">
+          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right">
             숨겨진 독립운동을 되짚기 위해
             <br />
             우리는 세 가지에 집중합니다.

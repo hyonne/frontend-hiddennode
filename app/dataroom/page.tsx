@@ -149,12 +149,17 @@ export default function dataroom() {
         <div className="py-8">
           <h1 className="text-2xl font-bold text-center mb-8">자료실</h1>
 
-          {/* Featured Content Grid */}
+          { /* Featured Cards - update */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <FeaturedCard image="/images/main03_1.png?height=200&width=300" title="사진설명1" number="1" />
-            <FeaturedCard image="/images/main04_bg.png?height=200&width=300" title="사진설명2" number="2" />
-            <FeaturedCard image="/images/main02.jpg?height=200&width=300" title="사진설명3" number="3"
-            />
+            <Link href="/dataroom/intro">
+              <FeaturedCard image="/images/intro.png?height=200&width=300" title="판결문 콘텐츠 소개" />
+            </Link>
+            <Link href="/dataroom/occupation">
+              <FeaturedCard image="/images/main04_bg.png?height=200&width=300" title="국권피탈과 독립운동" />
+            </Link>
+            <Link href="/dataroom/liberation">
+              <FeaturedCard image="/images/main02.jpg?height=200&width=300" title="해방" />
+            </Link>
           </div>
 
           {/* Content Table */}
@@ -257,7 +262,8 @@ function NavItem({
   )
 }
 
-function FeaturedCard({ image, title, number }: { image: string; title: string; number: string }) {
+{/* Featured Card Component - update*/}
+function FeaturedCard({ image, title }: { image: string; title: string }) {
   return (
     <div className="relative border border-gray-300">
       <Image
@@ -268,13 +274,12 @@ function FeaturedCard({ image, title, number }: { image: string; title: string; 
         className="w-full h-48 object-cover"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-2">
-        <p className="text-sm">
-          {number} {title}
-        </p>
+        <p className="text-sm">{title}</p>
       </div>
     </div>
   )
 }
+
 
 function TableRow({
   id,

@@ -289,7 +289,7 @@ function TableRow({
   views,
 }: { id: string; title: string; author: string; date: string; views: string }) {
   return (
-    <tr className="hover:bg-gray-50 text-center">
+    <tr className="hover:bg-gray-800 text-center">
       <td className="px-4 py-2 border-b">{id}</td>
       <td className="px-4 py-2 border-b text-left">
         <Link href="#" className="hover:underline">

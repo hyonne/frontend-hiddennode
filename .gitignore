@@ -1,0 +1,4 @@
+node_modules/
+# Next.js build output
+.next/
+readme.md

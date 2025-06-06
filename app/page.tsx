@@ -91,7 +91,7 @@ export default function Home() {
             조각을 연결하다.
           </h1>
           <p className="mt-8 text-base md:text-lg text-white/80 text-center max-w-2xl tracking-[0.10em]">
-            판결문 속 인물, 잊힌 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
+            판결문 속 독립운동가와 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
           </p>
         </div>
         <div className="z-10 w-full h-full flex flex-col justify-end px-4 pb-12">
@@ -108,8 +108,8 @@ export default function Home() {
                 Welcome to<br /> HiddenNode
               </h2>
               <h5 className="text-base md:text-lg mb-6 text-gray-500 font-medium whitespace-pre-line">
-                숨겨진 이름, 잊힌 기록<br />
-                판결문과 사건을 따라<br />
+                잊혀진 독립운동가와 기록들<br />
+                독립운동 판결문과 사건을 따라<br />
                 지식그래프로 이어지는 독립운동의 여정
               </h5>
               <Button
@@ -154,10 +154,10 @@ export default function Home() {
 
         <div className="absolute bottom-0 inset-x-0 h-[60%] z-20 flex flex-col md:flex-row items-center justify-center md:gap-x-24 px-6">
           {/* 이미지 영역 */}
-          <div className="w-[clamp(220px,30vw,300px)] h-auto mb-6 md:mb-0">
+          <div className="w-[clamp(220px,30vw,400px)] h-auto mb-6 md:mb-0">
             <Image
-              src="/images/main01.png"
-              alt="맥북 gif 이미지"
+              src="/images/intro.png"
+              alt="판결문 이미지"
               width={500}
               height={400}
               className="object-contain w-full h-auto rounded shadow-lg"
@@ -306,14 +306,14 @@ export default function Home() {
         <div className="max-w-4xl mx-auto h-full flex items-center justify-end relative z-10">
           <div className="bg-black/60 backdrop-blur-sm p-8 rounded-lg text-left max-w-lg">
             <h2 className="text-2xl text-white font-bold mb-4">
-              당신이 몰랐던 독립운동가의 이야기를 찾아보세요
+              우리가 알지 못했던 이름들 속에서 새로운 역사가 시작됩니다.
             </h2>
             <p className="text-base text-white leading-relaxed">
-              이 인물은 현재 인명사전에도 등재되지 않은 숨겨진 독립운동가입니다.
+              당신의 클릭 하나가, 기록되지 못한 진실을 밝혀냅니다.
               <br />
-              판결문 속 이름을 기반으로 그래프를 구성한 결과, 1931년 부정사건,
+              수많은 재판 기록 속에 숨겨진 목소리를 연결했습니다.
               <br />
-              일본단체와의 연결이 확인되었고 이에 따라 독립운동 개입 가능성이 드러났습니다.
+              과거의 조각들을 엮어, 하나의 이야기를 완성해보세요.
             </p>
           </div>
         </div>

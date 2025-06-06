@@ -21,7 +21,7 @@ export default function Header() {
           {/* 메뉴 리스트 */}
           <nav className="flex gap-6 text-sm font-medium pl-[30px]">
             <Link
-              href="./main"
+              href="/"
               className="relative hover:text-[#e9e4da] transition-colors duration-300 
                          after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 
                          after:h-[2px] after:bg-[#e9e4da] after:transition-all after:duration-300 

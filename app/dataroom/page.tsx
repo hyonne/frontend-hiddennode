@@ -155,10 +155,10 @@ export default function dataroom() {
               <FeaturedCard image="/images/intro.png?height=200&width=300" title="판결문 콘텐츠 소개" />
             </Link>
             <Link href="/dataroom/occupation">
-              <FeaturedCard image="/images/main04_bg.png?height=200&width=300" title="국권피탈과 독립운동" />
+              <FeaturedCard image="/images/occupation.png?height=200&width=300" title="일제강점기 체포와 수형,그리고 기록물" />
             </Link>
             <Link href="/dataroom/liberation">
-              <FeaturedCard image="/images/main02.jpg?height=200&width=300" title="해방" />
+              <FeaturedCard image="/images/liberation.png?height=200&width=300" title="해방" />
             </Link>
           </div>
 

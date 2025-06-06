@@ -10,7 +10,7 @@ export default function IntroPage() {
   return (
     <>
       <Header />
-        <main className="w-full bg-black text-white px-6 md:px-32 pt-20 pb-20 py-10 text-[20px]">
+        <main className="w-full bg-black text-white px-6 md:px-32 pt-20 pb-20 py-10 text-[27px]">
         {/* 상단 네비게이션 - 오른쪽 상단 위치 */}
         <div className="flex justify-end mb-3">
             <div className="text-base text-white flex items-center pb-10 gap-2 font-medium">
@@ -47,7 +47,7 @@ export default function IntroPage() {
         </div>
 
         {/* 텍스트 오른쪽 */}
-        <div className="flex-1 text-white leading-relaxed text-[20px]">
+        <div className="flex-1 text-white leading-relaxed text-[27px]">
             <p className="mb-4">
             독립운동 역사가 정당한 평가를 받기 위해서는 독립운동에 헌신했던 선열들을 찾아 그 공적을 널리 알리고,
             당사자 및 후손들이 정당한 예우를 받도록 해야 합니다. 독립유공자와 후손들을 예우하는 것은
@@ -83,14 +83,14 @@ export default function IntroPage() {
         </p>
         <br />
         {/* 현황 표 제목 */}
-        <h3 className="text-[#A773AB] text-center text-[22px] font-semibold mb-3">
+        <h3 className="text-[#A773AB] text-center text-[25px] font-semibold mb-3">
           국가기록원 소장 독립운동 관련 기록물 정리 현황(2014년 현재)
         </h3>
         <br />
         {/* 표 */}
         <div className="flex justify-center mb-6">
-          <table className="border border-[#A773AB] text-center text-sm w-[700px]">
-            <thead className="bg-[#f8f5ea] text-[#444]">
+          <table className="border border-[#A773AB] text-center text-sm w-[900px]">
+            <thead className="bg-[#f8f5ea] text-[#333]">
               <tr>
                 <th className="border px-4 py-2">구분</th>
                 <th className="border px-4 py-2">판결문</th>
@@ -112,7 +112,7 @@ export default function IntroPage() {
         </div>
 
         {/* 주석 */}
-        <div className="text-[15px] space-y-1 text-left w-[700px] mx-auto">
+        <div className="text-[20px] space-y-1 text-left w-[900px] mx-auto">
           <p>* 단 일부 정리되지 않은 기록물이 있으므로 향후 숫자는 증가할 수 있음</p>
           <p>* 국가기록원은 위의 기록물과 아직 정리되지 않은 기록물들을 연차적으로 정리하여 기본정보 및 이미지를 지속적으로 제공할 예정입니다.</p>
         </div>
@@ -157,10 +157,10 @@ export default function IntroPage() {
             <FeaturedCard image="/images/intro.png?height=200&width=300" title="판결문 콘텐츠 소개" />
             </Link>
             <Link href="/dataroom/occupation">
-            <FeaturedCard image="/images/main04_bg.png?height=200&width=300" title="국권피탈과 독립운동" />
+            <FeaturedCard image="/images/occupation.png?height=200&width=300" title="일제강점기 체포와 수형,그리고 기록물" />
             </Link>
             <Link href="/dataroom/liberation">
-            <FeaturedCard image="/images/main02.jpg?height=200&width=300" title="해방" />
+            <FeaturedCard image="/images/liberation.png?height=200&width=300" title="해방" />
             </Link>
         </div>
         </div>

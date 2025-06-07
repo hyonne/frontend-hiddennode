@@ -13,9 +13,9 @@ export default function KnowledgeGraph() {
   const [graphData, setGraphData] = useState<any>(null)
 
   // 데이터셋 버튼 핸들러 (각 버튼마다 파일명 코드에서 지정)
-  const [activeDataset, setActiveDataset] = useState('줄인데이터.json');
+  const [activeDataset, setActiveDataset] = useState('전체.json');
   const datasetFiles = [
-    { name: '전체', file: '줄인데이터.json' },
+    { name: '전체', file: '전체.json' },
     { name: '함경도', file: '함경도.json' }, // 여기에 원하는 파일명 입력
     { name: '평안도', file: '평안도.json' }, // 여기에 원하는 파일명 입력
     { name: '황해도', file: '황해도.json' },

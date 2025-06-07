@@ -47,7 +47,7 @@ export default function IntroPage() {
         </div>
 
         {/* 텍스트 오른쪽 */}
-        <div className="flex-1 max-w-[750px] text-white leading-relaxed text-[23px]">
+        <div className="flex-1 text-white leading-relaxed text-[27px]">
             <p className="mb-4">
             1945년 8월 15일 조선은 일본 천황이 항복 사실을 발표하면서 해방되었다.
             지역에 따라 소식이 전해지는 데에는 시간차가 있었지만, 전국에서 해방을 환영하는 시위가 열렸다.

@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="mb-6 md:mb-0">
             <h2 className="text-xl font-bold text-white mb-2">HiddenNode</h2>
-            <p className="text-gray-400 text-xs">© 2023 HiddenNode. All rights reserved.</p>
+            <p className="text-gray-400 text-xs">© 2025 HiddenNode. All rights reserved.</p>
           </div>
           <div className="flex space-x-4">
             <Link href="#" className="text-gray-400 hover:text-white">

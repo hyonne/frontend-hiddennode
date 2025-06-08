@@ -99,7 +99,7 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 ## 🚀 배포 및 실행 방법
 
 ```bash
-git clone https://github.com/Donga-SW/frontend.git
+git clone https://github.com/dau-J/frontend-hiddennode.git
 cd frontend
 npm install
 npm run dev

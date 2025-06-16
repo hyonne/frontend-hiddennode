@@ -111,3 +111,4 @@ npm install next react react-dom --legacy-peer-deps <br>
 npm install sigma graphology --legacy-peer-deps <br>
 npm install graphology-serialization --legacy-peer-deps<br>
 npm install -D @types/react @types/react-dom --legacy-peer-deps
+------------------------------------------------------------------------

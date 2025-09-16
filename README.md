@@ -41,7 +41,16 @@ HiddenNode는 일제강점기 **판결문 속 인물·사건·장소 정보를 �
 | 토글 버튼 | 사용
 
 ---
+## 🧩 추가 진행현황
+| 아이템명 |
+|----------|
+| 다국어 지원 및 번역 기능 |
+| 그래프 인터랙션 고도화 |
+| KG Embedding 고도화 |
+| 에러 처리 보완 |
+| 접근성 개선 |
 
+---
 ## 🧩 Figma 프로토타입
 
 디자인은 Figma를 기반으로 제작되었습니다.
@@ -71,4 +80,5 @@ npm install next react react-dom --legacy-peer-deps <br>
 npm install sigma graphology --legacy-peer-deps <br>
 npm install graphology-serialization --legacy-peer-deps<br>
 npm install -D @types/react @types/react-dom --legacy-peer-deps
+
 

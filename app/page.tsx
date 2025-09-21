@@ -9,6 +9,7 @@ import { Cube } from "@/components/cube";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 // 클라이언트 컴포넌트를 불러오는 코드
 const StepperSection = dynamic(() => import("@/components/stepper-section"), {
@@ -24,12 +25,13 @@ const StepperSection = dynamic(() => import("@/components/stepper-section"), {
 
 export default function Home() {
   const router = useRouter();
+  const { translate } = useTranslation();
 
   const steps = [
     {
       id: 1,
-      title: "판결문 수집 및 엔티티 추출",
-      description: `판결문에서 인물, 사건, 장소와 같은 정보를 추출합니다.`,
+      title: translate('step_collection_title'),
+      description: translate('step_collection_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -41,8 +43,8 @@ export default function Home() {
     },
     {
       id: 2,
-      title: "STI 기반 의미 연결",
-      description: `STI(Semantic Table Interpretation) 방식으로 요소 간 의미 있는 관계를 연결하고 지식그래프를 구성합니다.`,
+      title: translate('step_sti_title'),
+      description: translate('step_sti_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -54,8 +56,8 @@ export default function Home() {
     },
     {
       id: 3,
-      title: "지식그래프 시각화 탐색",
-      description: `시각화된 그래프에서 공적으로 알려지지 않은 독립운동의 흐름을 직접 탐색할 수 있습니다.`,
+      title: translate('step_visualization_title'),
+      description: translate('step_visualization_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -85,13 +87,13 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-start pt-24 px-4">
           <h1 className="text-3xl md:text-4xl font-bold text-white text-center leading-snug">
-            숨겨진 독립운동의
+            {translate('main_title_1')}
           </h1>
           <h1 className="mt-2 text-4xl md:text-5xl font-bold text-white text-center leading-snug">
-            조각을 연결하다.
+            {translate('main_title_2')}
           </h1>
           <p className="mt-8 text-base md:text-lg text-white/80 text-center max-w-2xl tracking-[0.10em]">
-            판결문 속 독립운동가와 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
+            {translate('main_subtitle')}
           </p>
         </div>
         <div className="z-10 w-full h-full flex flex-col justify-end px-4 pb-12">
@@ -105,18 +107,21 @@ export default function Home() {
               "
             >
               <h2 className="text-4xl md:text-4xl mb-4 text-black font-bold tracking-[0.05em]">
-                Welcome to<br /> HiddenNode
+                {translate('welcome_title').split(' ').map((word, index) => (
+                  <span key={index}>
+                    {word}
+                    {index === 1 ? <br /> : ' '}
+                  </span>
+                ))}
               </h2>
               <h5 className="text-base md:text-lg mb-6 text-gray-500 font-medium whitespace-pre-line">
-                잊혀진 독립운동가와 기록들<br />
-                독립운동 판결문과 사건을 따라<br />
-                지식그래프로 이어지는 독립운동의 여정
+                {translate('welcome_description')}
               </h5>
               <Button
                 onClick={() => router.push("/graph")}
                 className="flex items-center justify-between w-full px-6 py-7 bg-black text-white text-lg hover:bg-black/90"
               >
-                <span>탐색 시작하기</span>
+                <span>{translate('start_exploration')}</span>
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
@@ -144,7 +149,7 @@ export default function Home() {
           <div className="h-px bg-black w-16 mr-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white tracking-[0.35em]">
             <span className="bg-black/70 px-3 py-1">
-              독립운동 판결문, 왜 중요할까요?
+              {translate('section2_title')}
             </span>
           </h2>
         </div>
@@ -167,17 +172,17 @@ export default function Home() {
           {/* 텍스트 영역 */}
           <div className="w-[clamp(320px,40vw,600px)] space-y-8 text-left leading-[clamp(1.5rem,3vw,2rem)] bg-gray-800 rounded-xl p-6 shadow text-white">
             <p className="text-[clamp(1rem,2.5vw,1.25rem)] tracking-[0.2em]">
-              교과서에 나오지 않는 기록이 있습니다.
+              {translate('section2_content_1')}
               <br />
-              그건 바로, 일제에 체포된 사람들의 <strong>재판 기록</strong>
-              입니다.
+              {translate('section2_content_2')} <strong>{translate('section2_content_3')}</strong>
+              {translate('section2_content_4')}
               <br />
-              우리는 이 판결문 속 <strong>잊혀진 인물</strong>들로부터
+              {translate('section2_content_5')} <strong>{translate('section2_content_6')}</strong>{translate('section2_content_7')}
               <br />
-              <strong>잊혀진 독립운동</strong>의 실마리를 찾습니다.
+              <strong>{translate('section2_content_8')}</strong>{translate('section2_content_9')}
             </p>
             <button className="text-gray-400 font-semibold flex items-center justify-start text-[clamp(1rem,2.5vw,1.125rem)] tracking-[0.15em]">
-              탐색해보기 <span className="ml-1">&gt;</span>
+              {translate('explore_more')} <span className="ml-1">&gt;</span>
             </button>
           </div>
         </div>
@@ -200,14 +205,12 @@ export default function Home() {
             <div className="h-px bg-white w-16 mr-4" />
             <h2 className="text-4xl md:text-3xl font-bold text-white tracking-[0.35em]">
               <span className="bg-black/70 px-3 py-1">
-                사라진 영웅의 이름을 기억하는 방법.
+                {translate('section3_title')}
               </span>
             </h2>
           </div>
-          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right">
-            숨겨진 독립운동을 되짚기 위해
-            <br />
-            우리는 세 가지에 집중합니다.
+          <p className="text-sm md:text-base text-white tracking-[0.15em] text-right whitespace-pre-line">
+            {translate('section3_subtitle')}
           </p>
         </div>
         <div className="absolute bottom-0 inset-x-0 h-[70%] z-20 flex items-center justify-center px-4">
@@ -220,11 +223,11 @@ export default function Home() {
                     1
                   </span>
                   <h3 className="text-base font-medium text-[#ded78b] tracking-[0.15em]">
-                    데이터 정규화
+                    {translate('card1_title')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-400 tracking-[0.10em]">
-                  잊혀진 독립운동가, 데이터를 통해 발견합니다.
+                  {translate('card1_desc')}
                 </p>
               </div>
               <div className="h-56 bg-gray-800 relative">
@@ -245,11 +248,11 @@ export default function Home() {
                     2
                   </span>
                   <h3 className="text-base font-medium text-[#ded78b] tracking-[0.15em]">
-                    지식그래프
+                    {translate('card2_title')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-400 tracking-[0.10em]">
-                  사건과 사람을 지식그래프로 엮습니다.
+                  {translate('card2_desc')}
                 </p>
               </div>
               <div className="h-56 bg-gray-800 relative">
@@ -270,11 +273,11 @@ export default function Home() {
                     3
                   </span>
                   <h3 className="text-base font-medium text-[#ded78b] tracking-[0.15em]">
-                    탐색
+                    {translate('card3_title')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-400 tracking-[0.10em]">
-                  누구나 쉽게 탐색할 수 있는 도구로 만듭니다.
+                  {translate('card3_desc')}
                 </p>
               </div>
               <div className="h-56 bg-gray-800 relative">
@@ -306,14 +309,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto h-full flex items-center justify-end relative z-10">
           <div className="bg-black/60 backdrop-blur-sm p-8 rounded-lg text-left max-w-lg">
             <h2 className="text-2xl text-white font-bold mb-4">
-              우리가 알지 못했던 이름들 속에서 새로운 역사가 시작됩니다.
+              {translate('section5_title')}
             </h2>
-            <p className="text-base text-white leading-relaxed">
-              당신의 클릭 하나가, 기록되지 못한 진실을 밝혀냅니다.
-              <br />
-              수많은 재판 기록 속에 숨겨진 목소리를 연결했습니다.
-              <br />
-              과거의 조각들을 엮어, 하나의 이야기를 완성해보세요.
+            <p className="text-base text-white leading-relaxed whitespace-pre-line">
+              {translate('section5_content')}
             </p>
           </div>
         </div>
@@ -327,18 +326,14 @@ export default function Home() {
           </div>
 
           <div className="w-full md:w-1/2 space-y-8 text-base md:text-xl leading-relaxed text-center md:text-left">
-            <p>
-              우리는 판결문 기반의 인물·사건 데이터를 구조화하고,
-              <br />
-              STI 기반 관계 분석과 지식그래프 기술로
-              <br />
-              독립운동의 숨은 연결을 시각화합니다.
+            <p className="whitespace-pre-line">
+              {translate('team_intro_1')}
             </p>
           </div>
         </div>
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
-            HiddenNode 팀을 소개합니다.
+            {translate('team_title_1')}
             <span className="text-blue-400 ml-2 align-middle animate-pulse">
               ■
             </span>
@@ -354,17 +349,14 @@ export default function Home() {
           </div>
 
           <div className="w-full md:w-1/2 space-y-8 text-base md:text-xl leading-relaxed text-center md:text-left">
-            <p>
-              판결문은 단지 결과가 아니라,
-              <br />
-              저항의 흔적이 남은 역사적 단서입니다.
-              <br />그 안의 인물·사건·장소는 독립운동의 또 다른 퍼즐 조각입니다.
+            <p className="whitespace-pre-line">
+              {translate('team_intro_2')}
             </p>
           </div>
         </div>
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
-            이름 없는 기억을 잇는다는 것.
+            {translate('team_title_2')}
             <span className="text-blue-400 ml-2 align-middle animate-pulse">
               ■
             </span>
@@ -380,17 +372,15 @@ export default function Home() {
           </div>
 
           <div className="w-full md:w-1/2 space-y-8 text-base md:text-xl leading-relaxed text-center md:text-left">
-            <p>
-              잊힌 이름을 다시 연결하는 이 작업이,
-              <br />
-              누군가에게는 역사를 다시 생각하는 계기가 되길 바랍니다.
+            <p className="whitespace-pre-line">
+              {translate('team_intro_3')}
             </p>
           </div>
         </div>
 
         <div className="w-full max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl text-blue-400 tracking-wider font-light text-left">
-            이름 없는 기억을 잇는다는 것
+            {translate('team_title_3')}
             <span className="text-blue-400 ml-2 align-middle animate-pulse">
               ■
             </span>

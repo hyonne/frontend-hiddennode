@@ -1,0 +1,19 @@
+# 의존성
+node_modules
+
+# Next.js 빌드 파일들
+.next
+out
+build
+
+# 환경 변수
+.env.local
+.env
+*.env
+
+# 기타
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

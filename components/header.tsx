@@ -2,9 +2,12 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import { useTranslation } from "@/contexts/TranslationContext"
+import LanguageDropdown from "@/components/LanguageDropdown"
 
 export default function Header() {
+  const { translate } = useTranslation()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-black text-white backdrop-blur supports-[backdrop-filter]:bg-black/75">
       <div className="w-full h-20 flex items-center px-6">
@@ -27,7 +30,7 @@ export default function Header() {
                          after:h-[2px] after:bg-[#e9e4da] after:transition-all after:duration-300 
                          hover:after:w-full"
             >
-              메인화면
+              {translate('main')}
             </Link>
             <Link
               href="/graph"
@@ -36,7 +39,7 @@ export default function Header() {
                          after:h-[2px] after:bg-[#e9e4da] after:transition-all after:duration-300 
                          hover:after:w-full"
             >
-              관계도 탐색
+              {translate('graph')}
             </Link>
             <Link
               href="/dataroom"
@@ -45,17 +48,14 @@ export default function Header() {
                          after:h-[2px] after:bg-[#e9e4da] after:transition-all after:duration-300 
                          hover:after:w-full"
             >
-              자료실
+              {translate('dataroom')}
             </Link>
           </nav>
         </div>
-        <div className="ml-auto inline-flex">
-          <button className="bg-black/0 hover:bg-white/60 text-white font-bold py-2 px-4 rounded-l">
-            Korean
-          </button>
-          <button className="bg-black/0 hover:bg-white/60 text-white font-bold py-2 px-4 rounded-r">
-            English
-          </button>
+        
+        {/* 언어 선택 드롭다운 */}
+        <div className="ml-auto">
+          <LanguageDropdown />
         </div>
       </div>
     </header>

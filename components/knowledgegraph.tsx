@@ -16,15 +16,15 @@ export default function KnowledgeGraph() {
   const [activeDataset, setActiveDataset] = useState('전체.json');
   const datasetFiles = [
     { name: '전체', file: '전체.json' },
-    { name: '함경도', file: '함경도.json' }, // 여기에 원하는 파일명 입력
-    { name: '평안도', file: '평안도.json' }, // 여기에 원하는 파일명 입력
-    { name: '황해도', file: '황해도.json' },
-    { name: '강원도', file: '강원도.json' }, // 여기에 원하는 파일명 입력
-    { name: '경기도', file: '경기도.json' },
-    { name: '충청도', file: '충청도.json' }, // 여기에 원하는 파일명 입력
-    { name: '전라도', file: '전라도.json' },
-    { name: '경상도', file: '경상도.json' }, // 여기에 원하는 파일명 입력
-    { name: '기타', file: '기타.json' }
+    { name: '함경도(Hamgyeongdo)', file: '함경도.json' }, // 여기에 원하는 파일명 입력
+    { name: '평안도(Pyongan)', file: '평안도.json' }, // 여기에 원하는 파일명 입력
+    { name: '황해도(Hwanghae)', file: '황해도.json' },
+    { name: '강원도(Gangwon)', file: '강원도.json' }, // 여기에 원하는 파일명 입력
+    { name: '경기도(Gyeonggi)', file: '경기도.json' },
+    { name: '충청도(Chungcheong)', file: '충청도.json' }, // 여기에 원하는 파일명 입력
+    { name: '전라도(Jeolla)', file: '전라도.json' },
+    { name: '경상도(Gyeongsang)', file: '경상도.json' }, // 여기에 원하는 파일명 입력
+    { name: '기타(Other)', file: '기타.json' }
   ];
 
   useEffect(() => {

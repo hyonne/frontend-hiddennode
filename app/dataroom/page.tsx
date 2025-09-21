@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ChevronLeft, ChevronRight, FileText, ChevronDown } from "lucide-react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import { useTranslation } from "@/contexts/TranslationContext"
 import React, { useState } from "react"
 
 type FilterCategory = 'subject' | 'type' | 'era' | 'person'
@@ -15,6 +16,7 @@ interface Filters {
 }
 
 export default function dataroom() {
+  const { translate } = useTranslation()
   const [filterOpen, setFilterOpen] = useState(false)
   const [filters, setFilters] = useState<Filters>({
     subject: [],
@@ -59,7 +61,7 @@ export default function dataroom() {
             className="bg-black border border-gray-300 rounded px-3 py-1 text-sm flex items-center"
             onClick={() => setFilterOpen((prev) => !prev)}
           >
-            검색 <ChevronDown className="h-3 w-3 ml-1" />
+            {translate('search')} <ChevronDown className="h-3 w-3 ml-1" />
           </button>
           {filterOpen && (
             <div className="absolute left-0 right-0 mx-auto mt-2 w-[1300px] max-w-[99vw] bg-white border border-gray-200 rounded shadow-lg z-30 p-12 flex text-black" style={{top: '100%'}}>
@@ -110,13 +112,13 @@ export default function dataroom() {
                     className="w-full py-3 bg-gray-200 text-black rounded mb-3 text-lg font-semibold"
                     onClick={handleClear}
                   >
-                    모두 지우기
+                    {translate('clear_all')}
                   </button>
                   <button
                     className="w-full py-3 bg-black text-white rounded text-lg font-semibold"
                     onClick={() => setFilterOpen(false)}
                   >
-                    검색하기
+                    {translate('search_btn')}
                   </button>
                 </div>
               </div>
@@ -147,18 +149,18 @@ export default function dataroom() {
 
         {/* Main Content */}
         <div className="py-8">
-          <h1 className="text-2xl font-bold text-center mb-8">자료실</h1>
+          <h1 className="text-2xl font-bold text-center mb-8">{translate('dataroom_title')}</h1>
 
           { /* Featured Cards - update */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <Link href="/dataroom/intro">
-              <FeaturedCard image="/images/intro.png?height=200&width=300" title="판결문 콘텐츠 소개" />
+              <FeaturedCard image="/images/intro.png?height=200&width=300" title={translate('featured_card_intro')} />
             </Link>
             <Link href="/dataroom/occupation">
-              <FeaturedCard image="/images/occupation.png?height=200&width=300" title="일제강점기 체포와 수형,그리고 기록물" />
+              <FeaturedCard image="/images/occupation.png?height=200&width=300" title={translate('featured_card_occupation')} />
             </Link>
             <Link href="/dataroom/liberation">
-              <FeaturedCard image="/images/liberation.png?height=200&width=300" title="해방" />
+              <FeaturedCard image="/images/liberation.png?height=200&width=300" title={translate('featured_card_liberation')} />
             </Link>
           </div>
 
@@ -167,40 +169,40 @@ export default function dataroom() {
             <table className="min-w-full">
               <thead>
                 <tr className="bg-gray-900 text-center">
-                  <th className="px-4 py-2 border-b">번호</th>
-                  <th className="px-4 py-2 border-b">제목</th>
-                  <th className="px-4 py-2 border-b">작성자</th>
-                  <th className="px-4 py-2 border-b">등록일</th>
-                  <th className="px-4 py-2 border-b">첨부</th>
-                  <th className="px-4 py-2 border-b">조회</th>
+                  <th className="px-4 py-2 border-b">{translate('table_number')}</th>
+                  <th className="px-4 py-2 border-b">{translate('table_title')}</th>
+                  <th className="px-4 py-2 border-b">{translate('table_author')}</th>
+                  <th className="px-4 py-2 border-b">{translate('table_date')}</th>
+                  <th className="px-4 py-2 border-b">{translate('table_attachment')}</th>
+                  <th className="px-4 py-2 border-b">{translate('table_views')}</th>
                 </tr>
               </thead>
               <tbody>
-                <TableRow id="1" title="의열단 사건 판결문 요약" author="teamhiddennode" date="2025-03-02" views="13" />
-                <TableRow id="2" title="6.10 만세운동 주요 인물 및 판결 정보" author="teamhiddennode" date="2025-03-15" views="18" />
-                <TableRow id="3" title="광주학생운동 판결문 및 인물 관계" author="teamhiddennode" date="2025-03-28" views="22" />
-                <TableRow id="4" title="신간회 사건 요약 및 판결문 발췌" author="teamhiddennode" date="2025-04-04" views="15" />
-                <TableRow id="5" title="조선어학회 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-04-17" views="27" />
-                <TableRow id="6" title="대한독립단 사건 주요 판결문" author="teamhiddennode" date="2025-04-29" views="19" />
-                <TableRow id="7" title="흥사단 사건 인물 및 판결 요약" author="teamhiddennode" date="2025-05-03" views="24" />
-                <TableRow id="8" title="부민관 폭파사건 판결문 및 관계망" author="teamhiddennode" date="2025-05-10" views="16" />
-                <TableRow id="9" title="조선공산당 사건 판결문 요약" author="teamhiddennode" date="2025-05-18" views="21" />
-                <TableRow id="10" title="대한광복회 사건 인물 및 판결 정보" author="teamhiddennode" date="2025-05-25" views="14" />
-                <TableRow id="11" title="3.1운동 주요 인물 판결문" author="teamhiddennode" date="2025-06-01" views="25" />
-                <TableRow id="12" title="형평사 사건 판결문 및 인물 관계" author="teamhiddennode" date="2025-06-07" views="28" />
-                <TableRow id="13" title="조선학생과학연구회 사건 요약" author="teamhiddennode" date="2025-06-13" views="17" />
-                <TableRow id="14" title="조선민흥회 사건 판결문 발췌" author="teamhiddennode" date="2025-06-18" views="29" />
-                <TableRow id="15" title="신민회 사건 인물 및 판결 정보" author="teamhiddennode" date="2025-06-22" views="23" />
-                <TableRow id="16" title="대한광복군 사건 판결문 요약" author="teamhiddennode" date="2025-06-26" views="19" />
-                <TableRow id="17" title="조선건국동맹 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-03-07" views="21" />
-                <TableRow id="18" title="조선의용대 사건 판결문 발췌" author="teamhiddennode" date="2025-03-21" views="15" />
-                <TableRow id="19" title="대한민국임시정부 사건 요약" author="teamhiddennode" date="2025-04-09" views="24" />
-                <TableRow id="20" title="조선청년독립단 사건 판결문" author="teamhiddennode" date="2025-04-23" views="18" />
-                <TableRow id="21" title="조선노동조합전국평의회 사건" author="teamhiddennode" date="2025-05-06" views="22" />
-                <TableRow id="22" title="조선혁명군 사건 판결문 및 인물 정보" author="teamhiddennode" date="2025-05-15" views="17" />
-                <TableRow id="23" title="조선민족혁명당 사건 판결문 요약" author="teamhiddennode" date="2025-05-29" views="20" />
-                <TableRow id="24" title="조선여성동우회 사건 판결문" author="teamhiddennode" date="2025-06-04" views="14" />
-                <TableRow id="25" title="조선소년연맹 사건 판결문 및 인물 관계" author="teamhiddennode" date="2025-06-15" views="23" />
+                <TableRow id="1" title={translate('judgment_summary')} author="teamhiddennode" date="2025-03-02" views="13" />
+                <TableRow id="2" title={translate('june_10_movement')} author="teamhiddennode" date="2025-03-15" views="18" />
+                <TableRow id="3" title={translate('gwangju_student_movement')} author="teamhiddennode" date="2025-03-28" views="22" />
+                <TableRow id="4" title={translate('shingan_society')} author="teamhiddennode" date="2025-04-04" views="15" />
+                <TableRow id="5" title={translate('korean_language_society')} author="teamhiddennode" date="2025-04-17" views="27" />
+                <TableRow id="6" title={translate('korean_independence_corps')} author="teamhiddennode" date="2025-04-29" views="19" />
+                <TableRow id="7" title={translate('heungsadan')} author="teamhiddennode" date="2025-05-03" views="24" />
+                <TableRow id="8" title={translate('bumin_hall_bombing')} author="teamhiddennode" date="2025-05-10" views="16" />
+                <TableRow id="9" title={translate('korean_communist_party')} author="teamhiddennode" date="2025-05-18" views="21" />
+                <TableRow id="10" title={translate('korean_liberation_association')} author="teamhiddennode" date="2025-05-25" views="14" />
+                <TableRow id="11" title={translate('march_first_movement')} author="teamhiddennode" date="2025-06-01" views="25" />
+                <TableRow id="12" title={translate('hyeongpyeongsa')} author="teamhiddennode" date="2025-06-07" views="28" />
+                <TableRow id="13" title={translate('korean_student_science_society')} author="teamhiddennode" date="2025-06-13" views="17" />
+                <TableRow id="14" title={translate('korean_people_association')} author="teamhiddennode" date="2025-06-18" views="29" />
+                <TableRow id="15" title={translate('sinmin_society')} author="teamhiddennode" date="2025-06-22" views="23" />
+                <TableRow id="16" title={translate('korean_liberation_army')} author="teamhiddennode" date="2025-06-26" views="19" />
+                <TableRow id="17" title={translate('korean_founding_alliance')} author="teamhiddennode" date="2025-03-07" views="21" />
+                <TableRow id="18" title={translate('korean_volunteer_corps')} author="teamhiddennode" date="2025-03-21" views="15" />
+                <TableRow id="19" title={translate('provisional_government')} author="teamhiddennode" date="2025-04-09" views="24" />
+                <TableRow id="20" title={translate('korean_youth_independence_corps')} author="teamhiddennode" date="2025-04-23" views="18" />
+                <TableRow id="21" title={translate('korean_labor_union_council')} author="teamhiddennode" date="2025-05-06" views="22" />
+                <TableRow id="22" title={translate('korean_revolutionary_army')} author="teamhiddennode" date="2025-05-15" views="17" />
+                <TableRow id="23" title={translate('korean_national_revolutionary_party')} author="teamhiddennode" date="2025-05-29" views="20" />
+                <TableRow id="24" title={translate('korean_women_friendship_society')} author="teamhiddennode" date="2025-06-04" views="14" />
+                <TableRow id="25" title={translate('korean_youth_league')} author="teamhiddennode" date="2025-06-15" views="23" />
               </tbody>
             </table>
           </div>

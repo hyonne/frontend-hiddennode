@@ -9,6 +9,7 @@ import { Cube } from "@/components/cube";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 // 클라이언트 컴포넌트를 불러오는 코드
 const StepperSection = dynamic(() => import("@/components/stepper-section"), {
@@ -24,12 +25,13 @@ const StepperSection = dynamic(() => import("@/components/stepper-section"), {
 
 export default function Home() {
   const router = useRouter();
+  const { translate } = useTranslation();
 
   const steps = [
     {
       id: 1,
-      title: "판결문 수집 및 엔티티 추출",
-      description: `판결문에서 인물, 사건, 장소와 같은 정보를 추출합니다.`,
+      title: translate('step_collection_title'),
+      description: translate('step_collection_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -41,8 +43,8 @@ export default function Home() {
     },
     {
       id: 2,
-      title: "STI 기반 의미 연결",
-      description: `STI(Semantic Table Interpretation) 방식으로 요소 간 의미 있는 관계를 연결하고 지식그래프를 구성합니다.`,
+      title: translate('step_sti_title'),
+      description: translate('step_sti_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -54,8 +56,8 @@ export default function Home() {
     },
     {
       id: 3,
-      title: "지식그래프 시각화 탐색",
-      description: `시각화된 그래프에서 공적으로 알려지지 않은 독립운동의 흐름을 직접 탐색할 수 있습니다.`,
+      title: translate('step_visualization_title'),
+      description: translate('step_visualization_desc'),
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
@@ -85,13 +87,13 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-start pt-24 px-4">
           <h1 className="text-3xl md:text-4xl font-bold text-white text-center leading-snug">
-            숨겨진 독립운동의
+            {translate('main_title_1')}
           </h1>
           <h1 className="mt-2 text-4xl md:text-5xl font-bold text-white text-center leading-snug">
-            조각을 연결하다.
+            {translate('main_title_2')}
           </h1>
           <p className="mt-8 text-base md:text-lg text-white/80 text-center max-w-2xl tracking-[0.10em]">
-            판결문 속 독립운동가와 사건, 알려지지 않은 항쟁을 지식그래프로 밝혀냅니다.
+            {translate('main_subtitle')}
           </p>
         </div>
         <div className="z-10 w-full h-full flex flex-col justify-end px-4 pb-12">
@@ -105,18 +107,21 @@ export default function Home() {
               "
             >
               <h2 className="text-4xl md:text-4xl mb-4 text-black font-bold tracking-[0.05em]">
-                Welcome to<br /> HiddenNode
+                {translate('welcome_title').split(' ').map((word, index) => (
+                  <span key={index}>
+                    {word}
+                    {index === 1 ? <br /> : ' '}
+                  </span>
+                ))}
               </h2>
               <h5 className="text-base md:text-lg mb-6 text-gray-500 font-medium whitespace-pre-line">
-                잊혀진 독립운동가와 기록들<br />
-                독립운동 판결문과 사건을 따라<br />
-                지식그래프로 이어지는 독립운동의 여정
+                {translate('welcome_description')}
               </h5>
               <Button
                 onClick={() => router.push("/graph")}
                 className="flex items-center justify-between w-full px-6 py-7 bg-black text-white text-lg hover:bg-black/90"
               >
-                <span>탐색 시작하기</span>
+                <span>{translate('start_exploration')}</span>
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </div>

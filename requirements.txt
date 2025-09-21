@@ -1,4 +1,19 @@
+# 의존성 설치 명령어들 (복사해서 붙여넣기)
+
+npm install --legacy-peer-deps
+
 npm install next react react-dom --legacy-peer-deps
-npm install sigma graphology --legacy-peer-deps
-npm install graphology -serialization --legacy-peer-deps
-npm install -D @types/react @types/react-dom --legacy-peer-deps
+
+npm install @radix-ui/react-dropdown-menu @radix-ui/react-dialog @radix-ui/react-toast --legacy-peer-deps
+
+npm install tailwindcss tailwind-merge class-variance-authority clsx --legacy-peer-deps
+
+npm install lucide-react next-themes --legacy-peer-deps
+
+npm install react-hook-form zod --legacy-peer-deps
+
+npm install deepl-node --legacy-peer-deps
+
+npm install @types/node @types/react @types/react-dom typescript --save-dev --legacy-peer-deps
+
+npm run dev
